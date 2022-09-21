@@ -14,8 +14,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 require_once "../config.php";
 
 // Define variables and initialize with empty values
-$dni = $name = $surname = $title = $description = $password = $confirm_password = "";
-$dni_error = $name_err = $surname_err = $title_err = $description_err = $password_err = $confirm_password_err = "";
+$dni = $name = $surname = $title = $description = $password = $confirm_password = $upload_image = $tmp_upload_image = "";
+$dni_error = $name_err = $surname_err = $title_err = $description_err = $password_err = $confirm_password_err = $upload_image_err = "";
+
 
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -68,16 +69,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
 
-    // Validate description
-    if (empty(trim($_POST["description"]))) {
-        $description_err = "Si us plau, introduïu descripció.";
-    } else {
+  
         // Set parameters
         $param_description = trim($_POST["description"]);
 
 
         $description = trim($_POST["description"]);
-    }
+    
 
 
     // Validate password
@@ -98,15 +96,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $confirm_password_err = "Les contrasenyes no coincideixen.";
         }
     }
+ 
+    // Validate description
+    if(isset($_POST['subbtn'])) {
+         // Set parameters
+         $param_upload_image = $_FILES['uploadfile']['name'];
+
+   $upload_image = $_FILES['uploadfile']['name'];
+
+
+   $tmp_upload_image = $_FILES['uploadfile']['tmp_name'];
+   echo"". $upload_image;
+
+   if(isset($upload_image) and !empty($upload_image)) {
+
+   } else {
+    echo "No hay imagen seleccionada"; 
+
+   }
+
+    } else {
+        
+        $upload_image_err = "Si us plau, introduïu imatge.";
+    }
+
+?>
+
+
+
+<?php
+
     // Check input errors before inserting in database
-    if (empty($dni_err) && empty($name_err) && empty($surname_err) && empty($title_err) && empty($description_err) && empty($password_err) && empty($password_err) && empty($confirm_password_err)) {
+    if (empty($dni_err) && empty($name_err) && empty($surname_err) && empty($title_err) && empty($description_err) && empty($password_err) && empty($password_err) && empty($confirm_password_err) && empty($upload_image_err)) {
 
         // Prepare an insert statement
-        $sql = "INSERT INTO teacher (dni, name, surname, title, description, password) VALUES (?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO teacher (dni, name, surname, title, description, password, image) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         if ($stmt = mysqli_prepare($link, $sql)) {
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "ssssss", $param_dni, $param_name, $param_surname, $param_title, $param_description, $param_password);
+            mysqli_stmt_bind_param($stmt, "sssssss", $param_dni, $param_name, $param_surname, $param_title, $param_description, $param_password, $param_upload_image);
 
             // Set parameters
             $param_dni = $dni;
@@ -115,6 +143,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $param_title = $title;
             $param_description = $description;
             $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
+            $param_upload_image = time().$upload_image;
+
+            $folder = '../profilepics/';
+
+
+            move_uploaded_file($tmp_upload_image, $folder.time().$upload_image);
+
 
             // Attempt to execute the prepared statement
             if (mysqli_stmt_execute($stmt)) {
@@ -158,7 +193,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="wrapper">
         <h2>Afegir professor</h2>
         <p>Crear compte de professor</p>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data" >
             <div class="form-group">
                 <label>DNI</label>
                 <input type="text" name="dni" class="form-control <?php echo (!empty($dni_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $dni; ?>">
@@ -194,10 +230,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="password" name="confirm_password" class="form-control <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_password; ?>">
                 <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
             </div>
+            <p>Foto de perfil</p>
+            <input type="file" name="uploadfile" <?php echo (!empty($file_upload_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $file_upload; ?>">
             <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Crear">
+                <br />
+                <input type="submit" name="subbtn" class="btn btn-primary" value="Crear">
                 <input type="reset" class="btn btn-secondary ml-2" value="Esborrar">
             </div>
+
+         
+
             <p><a href="adminTeachers.php">Panel administrador</a>.</p>
         </form>
     </div>
