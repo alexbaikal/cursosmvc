@@ -17,12 +17,11 @@
 
   // Check if the user is logged in, if not then redirect him to login page
   if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-    header("location: login.php");
+    header("location: ../login.php");
     exit;
   }
   ?>
-  <button type="button" onclick="window.location.href='adminTeachersAdd.php'" class="btn btn-primary">Afegir professor</button>
-
+<h1>Administrar professors</h1>
   <?php
   require_once "../config.php";
 
@@ -65,14 +64,13 @@
 
   while ($row = mysqli_fetch_array($result)) {
 
-    if( $row['dni'] == $_GET['dni'] ){
-      echo "yes";
+    if( isset($_GET['delete_dni']) && $row['dni'] == $_GET['delet_dni'] ){
 
-      $deleteQuery = "DELETE FROM teacher WHERE dni = " . $row['dni'];
+      $deleteQuery = "DELETE FROM teacher WHERE dni = '" . $row['dni']."'";
       
       if (mysqli_query($con, $deleteQuery)  === TRUE) {
         echo"Deleted successfuly: ".$row['dni'];
-
+        header("Refresh:2");
       } else {
         echo "error";
 
@@ -82,7 +80,6 @@
       //exit;
   
   }    else {
-    echo "no";
   }
 
     echo "<tr>";
@@ -105,8 +102,8 @@
     
     echo "<td>";
     echo "<form method='post' action=".htmlspecialchars($_SERVER["PHP_SELF"])." >";
-    echo "<input type='button' class='btn btn-primary'>Editar</input>";
-    echo "<td><a href='adminTeachers.php?dni=".$row['dni']."'>Delete</a>";
+    echo "<td><a href='adminTeachersEdit.php?dni=".$row['dni']."'>Edit</a>";
+    echo "<td><a href='adminTeachers.php?delete_dni=".$row['dni']."'>Delete</a>";
    
     echo "</td>";
     echo "</tr>";
@@ -119,6 +116,7 @@
   mysqli_close($con);
 
   ?>
+  <button type="button" onclick="window.location.href='adminTeachersAdd.php'" class="btn btn-primary">Afegir professor</button>
 
 </body>
 
