@@ -195,7 +195,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <p>Crear compte de professor</p>
 
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data" >
-            <div class="form-group">
+            
+        
+        <div class="form-group">
                 <label>DNI</label>
                 <input type="text" name="dni" class="form-control <?php echo (!empty($dni_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $dni; ?>">
                 <span class="invalid-feedback"><?php echo $dni_err; ?></span>
