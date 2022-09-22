@@ -14,8 +14,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 require_once "../config.php";
 
 // Define variables and initialize with empty values
-$teacher_id = $name = $description = $start = $end = "";
-$teacher_id_error = $name_err = $description_err = $start_err = $end_err = "";
+$teacher_id = $name = $description = $duration = $start = $end = "";
+$teacher_id_error = $name_err = $description_err = $duration_err = $start_err = $end_err = "";
 
 
 // Processing form data when form is submitted
@@ -54,6 +54,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $description = trim($_POST["description"]);
 
+
+    $duration = trim($_POST["duration"]);
+
+
+
     // validate start date and end date
 
     //validate and format start and end to timestamp
@@ -82,6 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo $teacher_id;
     echo $name;
     echo $description;
+    echo $duration;
     echo $start;
     echo $end;
 
@@ -94,24 +100,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <?php
 
     // Check input errors before inserting in database
-    if (empty($teacher_id_err) && empty($name_err) && empty($description_err) && empty($start_err) && empty($end_err)) {
+    if (empty($teacher_id_err) && empty($name_err) && empty($description_err) && empty($duration_err) && empty($start_err) && empty($end_err)) {
 
         // Prepare an insert statement
 
-        $sql = "INSERT INTO courses (teacher_id, name, description, start, end) VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO courses (teacher_id, name, description, duration, start, end) VALUES (?, ?, ?, ?, ?, ?)";
 
         if ($stmt = mysqli_prepare($link, $sql)) {
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "sssss", $param_teacher_id, $param_name, $param_description, $param_start, $param_end);
+            mysqli_stmt_bind_param($stmt, "sssss", $param_teacher_id, $param_name, $param_description, $param_duration, $param_start, $param_end);
             // Set parameters
             $param_teacher_id = $teacher_id;
             $param_name = $name;
             $param_start = $start;
             $param_end = $end;
-            
+
             echo "teacher_id: " . $teacher_id . "<br>";
             echo "name: " . $name . "<br>";
             echo "description: " . $description . "<br>";
+            echo "duration: " . $duration . "<br>";
             echo "start: " . $start . "<br>";
             echo "end: " . $end . "<br>";
 
@@ -132,7 +139,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Close connection
-    mysqli_close($link);
 }
 ?>
 
@@ -165,8 +171,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
             <div class="form-group">
-                <label>DNI</label>
-                <input type="text" name="teacher_id" class="form-control <?php echo (!empty($teacher_id_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $teacher_id; ?>">
+                <label>PROFESSOR</label>
+                <!--Create a dropdown list querying the teachers list and displaying teacher's name and surname-->
+
+                <select name="teacher_id" class="form-control <?php echo (!empty($teacher_id_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $teacher_id; ?>">
+                    <?php
+                    try {
+                        $sql = "SELECT * FROM teacher";
+
+                        $result = mysqli_query($link, $sql);
+                        while ($row = mysqli_fetch_array($result)) {
+                            echo "<option value='" . $row['teacher_id'] . "'>" . $row['name'] . "</option>";
+                        }
+                        echo "</select>";
+    
+                    } catch (Exception $e) {
+                        echo "</select>";
+
+                        echo "Error: " . $e->getMessage();
+                    }
+                    mysqli_close($link);    
+
+                    ?>
+
                 <span class="invalid-feedback"><?php echo $teacher_id_err; ?></span>
             </div>
             <div class="form-group">
@@ -179,6 +206,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="text" name="description" class="form-control <?php echo (!empty($description_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $description; ?>">
                 <span class="invalid-feedback"><?php echo $description_err; ?></span>
             </div>
+            <div class="form-group">
+                <label>Descripció</label>
+                <input type="text" name="duration" class="form-control <?php echo (!empty($duration_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $duration; ?>">
+                <span class="invalid-feedback"><?php echo $duration_err; ?></span>
+            </div>
             <!--Add start and end date of course-->
             <div class="form-group">
                 <label>Començament</label>
@@ -189,15 +221,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label>Finalització</label>
                 <input type="date" name="end" class="form-control <?php echo (!empty($end_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $end; ?>">
                 <span class="invalid-feedback"><?php echo $end_err; ?></span>
-            <div class="form-group">
-                <br />
-                <input type="submit" name="subbtn" class="btn btn-primary" value="Crear">
-                <input type="reset" class="btn btn-secondary ml-2" value="Esborrar">
-            </div>
+                <div class="form-group">
+                    <br />
+                    <input type="submit" name="subbtn" class="btn btn-primary" value="Crear">
+                    <input type="reset" class="btn btn-secondary ml-2" value="Esborrar">
+                </div>
 
 
 
-            <p><a href="adminCourses.php">Panel cursos</a>.</p>
+                <p><a href="adminCourses.php">Panel cursos</a>.</p>
         </form>
     </div>
 </body>

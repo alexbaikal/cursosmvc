@@ -114,32 +114,38 @@
 
     //check if uploadfile is set
 
-    if (isset($_FILES['uploadfile'])) {
 
       //if it is, upload the file to the server and update the teacher's image
 
       $filename = $_FILES["uploadfile"]["name"];
 
-      $tempname = $_FILES["uploadfile"]["tmp_name"];
+      //check if filename is empty
 
-      $folder = "../profilepics/" . time() . $filename;
+      if ($filename != "") {
 
-      move_uploaded_file($tempname, $folder);
-      
-      $query = 'UPDATE teacher SET name = "' . $_POST['name'] . '", surname = "' . $_POST['surname'] . '", title = "' . $_POST['title'] . '", description = "' . $_POST['description'] . '", image = "' .time().$filename . '" WHERE dni = "' . $_POST['dni'] . '"';
 
-      $result = mysqli_query($con, $query);
 
-      if ($result == null) {
+        $tempname = $_FILES["uploadfile"]["tmp_name"];
 
-        echo "No s'ha pogut editar el professor amb el DNI: " . $_POST['dni'];
+        $folder = "../profilepics/" . time() . $filename;
 
-        exit;
-      } else {
+        move_uploaded_file($tempname, $folder);
 
-        echo "S'ha editat el professor amb el DNI: " . $_POST['dni'];
+        $query = 'UPDATE teacher SET name = "' . $_POST['name'] . '", surname = "' . $_POST['surname'] . '", title = "' . $_POST['title'] . '", description = "' . $_POST['description'] . '", image = "' . time() . $filename . '" WHERE dni = "' . $_POST['dni'] . '"';
+
+        $result = mysqli_query($con, $query);
+
+        if ($result == null) {
+
+          echo "No s'ha pogut editar el professor amb el DNI: " . $_POST['dni'];
+
+          exit;
+        } else {
+
+          echo "S'ha editat el professor amb el DNI: " . $_POST['dni'];
+        }
       }
-    } else {
+     else {
 
       //if it isn't, update the teacher's data without changing the image
 
@@ -154,9 +160,7 @@
         exit;
       } else {
 
-        echo "S'ha editat el professor amb el DNI: " . $_POST['dni'];
-
-
+        echo "S'ha editar el professor amb el DNI: " . $_POST['dni'];
       }
     }
     header("Refresh:2");

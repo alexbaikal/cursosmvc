@@ -21,47 +21,44 @@
     exit;
   }
   ?>
-<h1>Administrar professors</h1>
+  <h1>Administrar professors</h1>
   <?php
   require_once "../config.php";
 
-  $con = mysqli_connect("localhost", "root", "");
 
-  if (!$con) {
+  if (!$link) {
 
     die('Could not connect.');
   }
 
 
 
-  mysqli_select_db($con, "courses");
 
-//add a search bar
+  //add a search bar
 
-echo "<div style='display: flex; justify-content: center; margin-bottom: 20px; align-items:center;'>";
-echo "<form action='adminTeachers.php' method='GET'>";
-echo "<input type='text' name='search' placeholder='Cerca per nom o DNI'>";
-echo "<input type='submit' value='Cerca'>";
-echo "</form>";
-echo "</div>";
+  echo "<div style='display: flex; justify-content: center; margin-bottom: 20px; align-items:center;'>";
+  echo "<form action='adminTeachers.php' method='GET'>";
+  echo "<input type='text' name='search' placeholder='Cerca per nom o DNI'>";
+  echo "<input type='submit' value='Cerca'>";
+  echo "</form>";
+  echo "</div>";
 
-//if the search bar is not empty, search for the teacher
-$query = "SELECT * FROM teacher";
-if (isset($_GET['search'])) {
+  //if the search bar is not empty, search for the teacher
+  $query = "SELECT * FROM teacher";
+  if (isset($_GET['search'])) {
 
-  $query = 'SELECT * FROM teacher WHERE dni LIKE "%' . $_GET['search'] . '%" OR name LIKE "%' . $_GET['search'] . '%"';
+    $query = 'SELECT * FROM teacher WHERE dni LIKE "%' . $_GET['search'] . '%" OR name LIKE "%' . $_GET['search'] . '%"';
+  }
 
-}
-
-  $result = mysqli_query($con, $query);
+  $result = mysqli_query($link, $query);
 
   ?>
 
-<div style="width: 100%; display: flex; justify-content: center; margin-bottom: 20px; align-items:center;">
+  <div style="width: 100%; display: flex; justify-content: center; margin-bottom: 20px; align-items:center;">
 
-<?php
+    <?php
 
-  echo "<table border='1'>
+    echo "<table border='1'>
 
 <tr>
 
@@ -81,65 +78,62 @@ if (isset($_GET['search'])) {
 
 
 
-  while ($row = mysqli_fetch_array($result)) {
+    while ($row = mysqli_fetch_array($result)) {
 
-    if( isset($_GET['delete_dni']) && $row['dni'] == $_GET['delete_dni'] ){
+      if (isset($_GET['delete_dni']) && $row['dni'] == $_GET['delete_dni']) {
 
-      $deleteQuery = "DELETE FROM teacher WHERE dni = '" . $row['dni']."'";
-      
-      if (mysqli_query($con, $deleteQuery)  === TRUE) {
-        echo"Deleted successfuly: ".$row['dni'];
-        header("Refresh:2");
+        $deleteQuery = "DELETE FROM teacher WHERE dni = '" . $row['dni'] . "'";
+
+        if (mysqli_query($link, $deleteQuery)  === TRUE) {
+          echo "Deleted successfuly: " . $row['dni'];
+          header("Refresh:2");
+        } else {
+          echo "error";
+        }
+
+        //header('location:adminTeachers.php');
+        //exit;
+
       } else {
-        echo "error";
-
       }
-  
-      //header('location:adminTeachers.php');
-      //exit;
-  
-  }    else {
-  }
 
-    echo "<tr>";
+      echo "<tr>";
 
-    echo "<td>" . $row['dni'] . "</td>";
+      echo "<td>" . $row['dni'] . "</td>";
 
-    echo "<td>" . $row['name'] . "</td>";
+      echo "<td>" . $row['name'] . "</td>";
 
-    echo "<td>" . $row['surname'] . "</td>";
+      echo "<td>" . $row['surname'] . "</td>";
 
-    echo "<td>" . $row['title'] . "</td>";
+      echo "<td>" . $row['title'] . "</td>";
 
-    echo "<td>" . $row['description'] . "</td>";
+      echo "<td>" . $row['description'] . "</td>";
 
-    //check if image contains a valid image format (jpg, png, gif, jpeg), if so, display it
+      //check if image contains a valid image format (jpg, png, gif, jpeg), if so, display it
 
-    if (strpos($row['image'], 'jpg') !== false || strpos($row['image'], 'png') !== false || strpos($row['image'], 'gif') !== false || strpos($row['image'], 'jpeg') !== false) {
+      if (strpos($row['image'], 'jpg') !== false || strpos($row['image'], 'png') !== false || strpos($row['image'], 'gif') !== false || strpos($row['image'], 'jpeg') !== false) {
 
-      echo "<td><img style='width: 50px;height:50px' src='../profilepics/" . $row['image']. "'/></td>";
+        echo "<td><img style='width: 50px;height:50px' src='../profilepics/" . $row['image'] . "'/></td>";
+      } else {
 
-    } else {
+        echo "<td>sense imatge</td>";
+      }
 
-      echo "<td>sense imatge</td>";
+      echo "<form method='post' action=" . htmlspecialchars($_SERVER["PHP_SELF"]) . " >";
+      echo "<td><a href='adminTeachersEdit.php?dni=" . $row['dni'] . "'>Editar</a>";
+      echo "<td><a href='adminTeachers.php?delete_dni=" . $row['dni'] . "'>Eliminar</a>";
 
+      echo "</td>";
+      echo "</tr>";
     }
-    
-    echo "<form method='post' action=".htmlspecialchars($_SERVER["PHP_SELF"])." >";
-    echo "<td><a href='adminTeachersEdit.php?dni=".$row['dni']."'>Editar</a>";
-    echo "<td><a href='adminTeachers.php?delete_dni=".$row['dni']."'>Eliminar</a>";
-   
-    echo "</td>";
-    echo "</tr>";
-  }
 
-  echo "</table>";
+    echo "</table>";
 
 
 
-  mysqli_close($con);
+    mysqli_close($link);
 
-  ?>
+    ?>
   </div>
   <button type="button" onclick="window.location.href='adminTeachersAdd.php'" class="btn btn-primary">Afegir professor</button>
 

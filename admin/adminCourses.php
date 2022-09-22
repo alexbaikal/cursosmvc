@@ -39,7 +39,7 @@
 //add a search bar
 
 echo "<div style='display: flex; justify-content: center; margin-bottom: 20px; align-items:center;'>";
-echo "<form action='adminTeachers.php' method='GET'>";
+echo "<form action='adminCourses.php' method='GET'>";
 echo "<input type='text' name='search' placeholder='Cerca per nom o DNI'>";
 echo "<input type='submit' value='Cerca'>";
 echo "</form>";
@@ -65,17 +65,17 @@ if (isset($_GET['search'])) {
 
 <tr>
 
-<th>DNI</th>
+<th>Professor</th>
 
 <th>Nom</th>
 
-<th>Cognoms</th>
-
-<th>Títol</th>
-
 <th>Descripció</th>
 
-<th>Imatge</th>
+<th>Duració</th>
+
+<th>Inici</th>
+
+<th>Fi</th>
 
 </tr>";
 
@@ -107,23 +107,14 @@ if (isset($_GET['search'])) {
 
     echo "<td>" . $row['name'] . "</td>";
 
-    echo "<td>" . $row['surname'] . "</td>";
-
-    echo "<td>" . $row['title'] . "</td>";
-
     echo "<td>" . $row['description'] . "</td>";
 
-    //check if image contains a valid image format (jpg, png, gif, jpeg), if so, display it
+    echo "<td>" . $row['duration'] . "</td>";
 
-    if (strpos($row['image'], 'jpg') !== false || strpos($row['image'], 'png') !== false || strpos($row['image'], 'gif') !== false || strpos($row['image'], 'jpeg') !== false) {
+    echo "<td>" . $row['start'] . "</td>";
 
-      echo "<td><img style='width: 50px;height:50px' src='../profilepics/" . $row['image']. "'/></td>";
+    echo "<td>" . $row['end'] . "</td>";
 
-    } else {
-
-      echo "<td>sense imatge</td>";
-
-    }
     
     echo "<form method='post' action=".htmlspecialchars($_SERVER["PHP_SELF"])." >";
     echo "<td><a href='adminTeachersEdit.php?teacher_id=".$row['teacher_id']."'>Editar</a>";
@@ -141,6 +132,7 @@ if (isset($_GET['search'])) {
 
   ?>
   </div>
+  <a href="adminTeachers.php" class="btn btn-primary">Tornar</a>
   <button type="button" onclick="window.location.href='adminCoursesAdd.php'" class="btn btn-primary">Afegir curs</button>
 
 </body>
