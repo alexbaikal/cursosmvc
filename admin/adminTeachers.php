@@ -36,11 +36,30 @@
 
   mysqli_select_db($con, "courses");
 
+//add a search bar
 
+echo "<div style='display: flex; justify-content: center; margin-bottom: 20px; align-items:center;'>";
+echo "<form action='adminTeachers.php' method='GET'>";
+echo "<input type='text' name='search' placeholder='Cerca per nom o DNI'>";
+echo "<input type='submit' value='Cerca'>";
+echo "</form>";
+echo "</div>";
 
-  $result = mysqli_query($con, "SELECT * FROM teacher");
+//if the search bar is not empty, search for the teacher
+$query = "SELECT * FROM teacher";
+if (isset($_GET['search'])) {
 
+  $query = 'SELECT * FROM teacher WHERE dni LIKE "%' . $_GET['search'] . '%" OR name LIKE "%' . $_GET['search'] . '%"';
 
+}
+
+  $result = mysqli_query($con, $query);
+
+  ?>
+
+<div style="width: 100%; display: flex; justify-content: center; margin-bottom: 20px; align-items:center;">
+
+<?php
 
   echo "<table border='1'>
 
@@ -64,7 +83,7 @@
 
   while ($row = mysqli_fetch_array($result)) {
 
-    if( isset($_GET['delete_dni']) && $row['dni'] == $_GET['delet_dni'] ){
+    if( isset($_GET['delete_dni']) && $row['dni'] == $_GET['delete_dni'] ){
 
       $deleteQuery = "DELETE FROM teacher WHERE dni = '" . $row['dni']."'";
       
@@ -93,17 +112,22 @@
     echo "<td>" . $row['title'] . "</td>";
 
     echo "<td>" . $row['description'] . "</td>";
-    if (isset($row['image'])) {
+
+    //check if image contains a valid image format (jpg, png, gif, jpeg), if so, display it
+
+    if (strpos($row['image'], 'jpg') !== false || strpos($row['image'], 'png') !== false || strpos($row['image'], 'gif') !== false || strpos($row['image'], 'jpeg') !== false) {
+
       echo "<td><img style='width: 50px;height:50px' src='../profilepics/" . $row['image']. "'/></td>";
-    }
-    else {
-      echo "<td>s/i</td>";
+
+    } else {
+
+      echo "<td>sense imatge</td>";
+
     }
     
-    echo "<td>";
     echo "<form method='post' action=".htmlspecialchars($_SERVER["PHP_SELF"])." >";
-    echo "<td><a href='adminTeachersEdit.php?dni=".$row['dni']."'>Edit</a>";
-    echo "<td><a href='adminTeachers.php?delete_dni=".$row['dni']."'>Delete</a>";
+    echo "<td><a href='adminTeachersEdit.php?dni=".$row['dni']."'>Editar</a>";
+    echo "<td><a href='adminTeachers.php?delete_dni=".$row['dni']."'>Eliminar</a>";
    
     echo "</td>";
     echo "</tr>";
@@ -116,7 +140,10 @@
   mysqli_close($con);
 
   ?>
+  </div>
   <button type="button" onclick="window.location.href='adminTeachersAdd.php'" class="btn btn-primary">Afegir professor</button>
+
+  <button type="button" onclick="window.location.href='adminPanel.php'" class="btn btn-primary">Tornar panel administrador</button>
 
 </body>
 

@@ -242,7 +242,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
          
 
-            <p><a href="adminTeachers.php">Panel administrador</a>.</p>
+            <p><a href="adminTeachers.php">Panel professors</a>.</p>
         </form>
     </div>
 </body>

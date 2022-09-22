@@ -18,7 +18,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     exit;
 }
 ?>
-<p><a href="/admin/adminCourses.php">Cursos</a></p>
+<p><a href="./adminCourses.php">Cursos</a></p>
 <p><a href="./adminTeachers.php">Professors</a></p>
 
 <p><a href="logout.php">Logout</a></p>
