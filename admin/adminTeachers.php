@@ -86,6 +86,11 @@
 
         if (mysqli_query($link, $deleteQuery)  === TRUE) {
           echo "Deleted successfuly: " . $row['dni'];
+          if (isset($row['image'])) {
+            //delete image from server inside ../profilepics
+            unlink("../profilepics/" . $row['image']);
+          }
+
           header("Refresh:2");
         } else {
           echo "error";
