@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.3
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Хост: 127.0.0.1
--- Время создания: Сен 22 2022 г., 07:53
--- Версия сервера: 10.4.24-MariaDB
--- Версия PHP: 7.4.28
+-- Host: 127.0.0.1
+-- Generation Time: Sep 23, 2022 at 10:19 AM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- База данных: `courses`
+-- Database: `courses`
 --
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `admin`
+-- Table structure for table `admin`
 --
 
 CREATE TABLE `admin` (
@@ -34,7 +34,7 @@ CREATE TABLE `admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Дамп данных таблицы `admin`
+-- Dumping data for table `admin`
 --
 
 INSERT INTO `admin` (`id`, `password`, `username`) VALUES
@@ -43,7 +43,7 @@ INSERT INTO `admin` (`id`, `password`, `username`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `courses`
+-- Table structure for table `courses`
 --
 
 CREATE TABLE `courses` (
@@ -51,14 +51,22 @@ CREATE TABLE `courses` (
   `teacher_id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `description` varchar(255) NOT NULL,
+  `duration` int(15) DEFAULT NULL,
   `start` int(50) NOT NULL,
   `end` int(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `courses`
+--
+
+INSERT INTO `courses` (`id_course`, `teacher_id`, `name`, `description`, `duration`, `start`, `end`) VALUES
+(2, 66, 'curso', 'descripcion curso', 12, 1663970400, 1663884000);
+
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `passwords`
+-- Table structure for table `passwords`
 --
 
 CREATE TABLE `passwords` (
@@ -69,7 +77,7 @@ CREATE TABLE `passwords` (
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `teacher`
+-- Table structure for table `teacher`
 --
 
 CREATE TABLE `teacher` (
@@ -85,63 +93,71 @@ CREATE TABLE `teacher` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Дамп данных таблицы `teacher`
+-- Dumping data for table `teacher`
 --
 
 INSERT INTO `teacher` (`teacher_id`, `dni`, `name`, `surname`, `title`, `description`, `password`, `created_at`, `image`) VALUES
-(66, 'rtert', 'Alex', 'Baik', 'DAW', 'Bó.', '$2y$10$CXMC01EnG8icwvhoMU7ZL.D47l6QtZWUsRZ1kSuluD4TCZdBaOdLi', '2022-09-21 08:59:42', '1663822153WhatsApp Image 2022-09-22 at 06.25.43.jpeg'),
-(68, 'wergwerg', 'wergwerg', 'wergwreg', 'wergwerg', 'admin', '$2y$10$nsfVfGt4qEW8KZyYgZ8ePeS4SnWS/6ayOaYe3NBSuX7aPxHn5o16W', '2022-09-22 06:51:24', '1663822284');
+(66, 'rtert', 'Alex', 'Baik', 'DAW', 'Bó.', '$2y$10$CXMC01EnG8icwvhoMU7ZL.D47l6QtZWUsRZ1kSuluD4TCZdBaOdLi', '2022-09-21 08:59:42', '1663918054download.jpg'),
+(68, 'wergwerg', 'wergwerg', 'wergwreg', 'wergwerg', 'admin', '$2y$10$nsfVfGt4qEW8KZyYgZ8ePeS4SnWS/6ayOaYe3NBSuX7aPxHn5o16W', '2022-09-22 06:51:24', '1663822284'),
+(69, '3563464364D', 'Nombre', 'Apellidos', 'Telecos', 'Profe telecos', '$2y$10$VNfydqd8Wpr8q2uvgPP6SeBcYVkUErVyU7NefRQnj6S5GUq/4LxAm', '2022-09-23 08:21:50', '1663917710download.jpg');
 
 --
--- Индексы сохранённых таблиц
+-- Indexes for dumped tables
 --
 
 --
--- Индексы таблицы `admin`
+-- Indexes for table `admin`
 --
 ALTER TABLE `admin`
   ADD KEY `id` (`id`);
 
 --
--- Индексы таблицы `courses`
+-- Indexes for table `courses`
 --
 ALTER TABLE `courses`
-  ADD UNIQUE KEY `id_course` (`id_course`);
+  ADD PRIMARY KEY (`id_course`) USING BTREE,
+  ADD KEY `teacher_id` (`teacher_id`);
 
 --
--- Индексы таблицы `passwords`
+-- Indexes for table `passwords`
 --
 ALTER TABLE `passwords`
   ADD KEY `id` (`id`);
 
 --
--- Индексы таблицы `teacher`
+-- Indexes for table `teacher`
 --
 ALTER TABLE `teacher`
   ADD PRIMARY KEY (`teacher_id`);
 
 --
--- AUTO_INCREMENT для сохранённых таблиц
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT для таблицы `teacher`
---
-ALTER TABLE `teacher`
-  MODIFY `teacher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
-
---
--- Ограничения внешнего ключа сохраненных таблиц
---
-
---
--- Ограничения внешнего ключа таблицы `courses`
+-- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  ADD CONSTRAINT `courses_ibfk_1` FOREIGN KEY (`id_course`) REFERENCES `teacher` (`teacher_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  MODIFY `id_course` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- Ограничения внешнего ключа таблицы `passwords`
+-- AUTO_INCREMENT for table `teacher`
+--
+ALTER TABLE `teacher`
+  MODIFY `teacher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `courses`
+--
+ALTER TABLE `courses`
+  ADD CONSTRAINT `courses_ibfk_1` FOREIGN KEY (`teacher_id`) REFERENCES `teacher` (`teacher_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `passwords`
 --
 ALTER TABLE `passwords`
   ADD CONSTRAINT `passwords_ibfk_1` FOREIGN KEY (`id`) REFERENCES `teacher` (`teacher_id`) ON DELETE CASCADE ON UPDATE CASCADE;
