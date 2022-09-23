@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="stylesheet" type="text/css" href="../styles/admin.css">
+  <link rel="stylesheet" href="../styles/admin.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin - cursos</title>
@@ -21,7 +21,7 @@
     exit;
   }
   ?>
-<h1>Administrar cursos</h1>
+  <h1>Administrar cursos</h1>
   <?php
   require_once "../config.php";
 
@@ -36,32 +36,36 @@
 
   mysqli_select_db($con, "courses");
 
-//add a search bar
+  //add a search bar
 
-echo "<div style='display: flex; justify-content: center; margin-bottom: 20px; align-items:center;'>";
-echo "<form action='adminCourses.php' method='GET'>";
-echo "<input type='text' name='search' placeholder='Cerca per nom o DNI'>";
-echo "<input type='submit' value='Cerca'>";
-echo "</form>";
-echo "</div>";
+  echo "<div style='display: flex; justify-content: center; margin-bottom: 20px; align-items:center;'>";
+  echo "<form action='adminCourses.php' method='GET'>";
+  echo "<input type='text' name='search' placeholder='Cerca per nom del curs o DNI'>";
+  echo "<input type='submit' value='Cerca'>";
+  echo "</form>";
+  echo "</div>";
 
-//if the search bar is not empty, search for the teacher
-$query = "SELECT * FROM courses";
-if (isset($_GET['search'])) {
+  //if the search bar is not empty, search for the teacher
+  $query = "SELECT * FROM courses";
+  if (isset($_GET['search'])) {
 
-  $query = 'SELECT * FROM courses WHERE teacher_id LIKE "%' . $_GET['search'] . '%" OR name LIKE "%' . $_GET['search'] . '%"';
+    $query = 'SELECT * FROM courses WHERE teacher_id LIKE "%' . $_GET['search'] . '%" OR name LIKE "%' . $_GET['search'] . '%"';
+  }
 
-}
+  $courses = mysqli_query($con, $query);
 
-  $result = mysqli_query($con, $query);
+
+
+
+
 
   ?>
 
-<div style="width: 100%; display: flex; justify-content: center; margin-bottom: 20px; align-items:center;">
+  <div style="width: 100%; display: flex; justify-content: center; margin-bottom: 20px; align-items:center;">
 
-<?php
+    <?php
 
-  echo "<table border='1'>
+    echo "<table border='1'>
 
 <tr>
 
@@ -79,61 +83,81 @@ if (isset($_GET['search'])) {
 
 </tr>";
 
+    //select from teacher where dni coincides with the one in the url
+
+    $query = 'SELECT * FROM teacher';
+
+    $result = mysqli_query($con, $query);
+
+    if ($result == null) {
+
+      echo "No s'ha trobat els professors";
+
+      exit;
+    }
 
 
-  while ($row = mysqli_fetch_array($result)) {
+    while ($course_row = mysqli_fetch_array($courses)) {
 
-    if( isset($_GET['delete_teacher_id']) && $row['teacher_id'] == $_GET['delete_teacher_id'] ){
+      if (isset($_GET['delete_id_course']) && $course_row['id_course'] == $_GET['delete_id_course']) {
 
-      $deleteQuery = "DELETE FROM courses WHERE teacher_id = '" . $row['teacher_id']."'";
-      
-      if (mysqli_query($con, $deleteQuery)  === TRUE) {
-        echo"Deleted successfuly: ".$row['teacher_id'];
-        header("Refresh:2");
-      } else {
-        echo "error";
+        $deleteQuery = "DELETE FROM courses WHERE id_course = '" . $course_row['id_course'] . "'";
+
+        if (mysqli_query($con, $deleteQuery)  === TRUE) {
+          echo "Deleted successfuly: " . $course_row['id_course'];
+          header("Refresh:2");
+        } else {
+          echo "error";
+        }
+
+        //header('location:adminTeachers.php');
+        //exit;
 
       }
-  
-      //header('location:adminTeachers.php');
-      //exit;
-  
-  }    else {
-  }
 
-    echo "<tr>";
+      echo "<tr>";
+      //pick theacher name that coincides with course_row teacher_id
+      while ($teacher_row = mysqli_fetch_array($result)) {
+        if ($course_row['teacher_id'] == $teacher_row['teacher_id']) {
+          echo "<td>" . $teacher_row['name'] . "</td>";
+        }
+      }
+      echo "<td>" . $course_row['name'] . "</td>";
 
-    echo "<td>" . $row['teacher_id'] . "</td>";
+      echo "<td>" . $course_row['description'] . "</td>";
 
-    echo "<td>" . $row['name'] . "</td>";
+      echo "<td>" . $course_row['duration'] . "</td>";
 
-    echo "<td>" . $row['description'] . "</td>";
+      echo "<td>" . date('d/m/Y', $course_row['start']) . "</td>";
 
-    echo "<td>" . $row['duration'] . "</td>";
+      echo "<td>" . date('d/m/Y', $course_row['end']) . "</td>";
 
-    echo "<td>" . $row['start'] . "</td>";
+      echo "<form method='post' action=" . htmlspecialchars($_SERVER["PHP_SELF"]) . " >";
 
-    echo "<td>" . $row['end'] . "</td>";
+      echo "<td><a href='adminCoursesEdit.php?id_course=" . $course_row['id_course'] . "'>Editar</a>";
 
-    
-    echo "<form method='post' action=".htmlspecialchars($_SERVER["PHP_SELF"])." >";
-    echo "<td><a href='adminTeachersEdit.php?teacher_id=".$row['teacher_id']."'>Editar</a>";
-    echo "<td><a href='adminTeachers.php?delete_teacher_id=".$row['teacher_id']."'>Eliminar</a>";
-   
-    echo "</td>";
-    echo "</tr>";
-  }
+      echo "<td><a href='adminCourses.php?delete_id_course=" . $course_row['id_course'] . "'>Eliminar</a>";
 
-  echo "</table>";
+      echo "</td>";
 
+      echo "</tr>";
+
+      mysqli_data_seek($result, 0);
+    }
 
 
-  mysqli_close($con);
 
-  ?>
+
+    echo "</table>";
+
+
+
+    mysqli_close($con);
+
+    ?>
   </div>
-  <a href="adminTeachers.php" class="btn btn-primary">Tornar</a>
-  <button type="button" onclick="window.location.href='adminCoursesAdd.php'" class="btn btn-primary">Afegir curs</button>
+  <a href="adminPanel.php" class="btn btn-primary"><- Tornar</a>
+  <button type="button" onclick="window.location.href='adminCoursesAdd.php'" class="btn btn-primary">+ Afegir curs</button>
 
 </body>
 

@@ -180,6 +180,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <style>
         body {
             font: 14px sans-serif;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .wrapper {
@@ -242,7 +246,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
          
 
-            <p><a href="adminTeachers.php">Panel professors</a>.</p>
+            <p><a href="adminTeachers.php">Panel professors</a></p>
         </form>
     </div>
 </body>

@@ -172,7 +172,7 @@
 
   ?>
 </div>
-<a href="adminTeachers.php" class="btn btn-primary">Tornar</a>
+<a href="adminTeachers.php" class="btn btn-primary"><- Tornar</a>
 
 </body>
 

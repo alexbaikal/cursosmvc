@@ -54,6 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $description = trim($_POST["description"]);
 
+    $param_duration = trim($_POST["duration"]);
 
     $duration = trim($_POST["duration"]);
 
@@ -83,16 +84,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $param_end = trim($_POST["end"]);
     }
 
-
-    echo $teacher_id;
-    echo $name;
-    echo $description;
-    echo $duration;
-    echo $start;
-    echo $end;
-
-
-
 ?>
 
 
@@ -108,21 +99,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($stmt = mysqli_prepare($link, $sql)) {
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "sssss", $param_teacher_id, $param_name, $param_description, $param_duration, $param_start, $param_end);
+            mysqli_stmt_bind_param($stmt, "ssssss", $param_teacher_id, $param_name, $param_description, $param_duration, $param_start, $param_end);
             // Set parameters
             $param_teacher_id = $teacher_id;
             $param_name = $name;
+            $param_description = $description;
+            $param_duration = $duration;
             $param_start = $start;
             $param_end = $end;
 
-            echo "teacher_id: " . $teacher_id . "<br>";
-            echo "name: " . $name . "<br>";
-            echo "description: " . $description . "<br>";
-            echo "duration: " . $duration . "<br>";
-            echo "start: " . $start . "<br>";
-            echo "end: " . $end . "<br>";
-
-
+          
             // Attempt to execute the prepared statement
             if (mysqli_stmt_execute($stmt)) {
                 // Redirect to login page
@@ -148,11 +134,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <title>Afegir curs</title>
-    <link rel="stylesheet" type="text/css" href="../styles/admin.css">
+    <link rel="stylesheet" href="../styles/admin.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
             font: 14px sans-serif;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .wrapper {
@@ -207,7 +197,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <span class="invalid-feedback"><?php echo $description_err; ?></span>
             </div>
             <div class="form-group">
-                <label>Descripció</label>
+                <label>Duració</label>
                 <input type="text" name="duration" class="form-control <?php echo (!empty($duration_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $duration; ?>">
                 <span class="invalid-feedback"><?php echo $duration_err; ?></span>
             </div>
