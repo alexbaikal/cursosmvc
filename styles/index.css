@@ -1,0 +1,82 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap");
+
+
+body {
+    height: 100vh;
+    font: 14px 'Open Sans', sans-serif;
+}
+img {
+    margin: 10px;
+}
+#content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 50%;
+    font-family: 'Roboto', sans-serif;
+}
+#loginBox {
+    display: flex;
+    flex-direction: row;
+    margin: 50px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+#loginBox p {
+    color: white;
+    font-size: 1.2em;
+    margin: 10px;
+}
+#loginBox p a {
+    color: white;
+    font-size: 1.5em;
+    margin: 10px;
+    text-decoration: none;
+    background-color: #38b6ff;
+    border-style: solid;
+    border-color: #97cbfc;
+    border-width: 1px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 30px;
+    box-shadow: 0 0 10px #38b6ff;
+}
+#rainbow-title {
+    background-image: linear-gradient(to right, rgb(112, 196, 189), rgb(116, 132, 187), rgb(0, 195, 255), rgb(69, 105, 116), rgb(70, 70, 172), rgb(44, 30, 128), rgb(15, 8, 83));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+#imgAjuntament {
+    width: 20vw;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+#bottom {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100vw;
+    background-color: #53a9fa;
+    color: white;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+#bottom a {
+    margin: 10px;
+    height: 100%;
+    margin-top: 10px;
+}
+#bottom p {
+    text-decoration: none;
+    height: 100%;
+    margin-top: 10px;
+}
