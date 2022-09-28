@@ -23,9 +23,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Validate DNI
     if (empty(trim($_POST["dni"]))) {
-        $dni_err = "Si us plau, introduïu cognoms.";
+        $dni_err = "Por favor, introducir apellidos.";
     } elseif (!preg_match('/^[a-zA-Z0-9_]+$/', trim($_POST["dni"]))) {
-        $dni_err = "El DNI només pot incluïr lletres, números o barres baixes.";
+        $dni_err = "El DNI sólo puede incluir letras, números o barras bajas.";
     } else {
 
         // Set parameters
@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Validate name
     if (empty(trim($_POST["name"]))) {
-        $name_err = "Si us plau, introduïu un nom.";
+        $name_err = "Por favor, introducir un nombre.";
     } else {
 
         // Set parameters
@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Validate surname
     if (empty(trim($_POST["surname"]))) {
-        $surname_err = "Si us plau, introduïu cognoms.";
+        $surname_err = "Por favor, introducir apellidos.";
     } else {
         $param_surname = trim($_POST["surname"]);
 
@@ -59,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Validate title
     if (empty(trim($_POST["title"]))) {
-        $title_err = "Si us plau, introduïu títol.";
+        $title_err = "Por favor, introducir un título.";
     } else {
 
         // Set parameters
@@ -80,20 +80,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Validate password
     if (empty(trim($_POST["password"]))) {
-        $password_err = "Please enter a password.";
+        $password_err = "Por favor, ingrese una contraseña.";
     } elseif (strlen(trim($_POST["password"])) < 5) {
-        $password_err = "La contrasenya ha de tenir com a mínim 6 caracters.";
+        $password_err = "La contraseña tiene que contener como mínimo 5 caracteres.";
     } else {
         $password = trim($_POST["password"]);
     }
 
     // Validate confirm password
     if (empty(trim($_POST["confirm_password"]))) {
-        $confirm_password_err = "Si us plau, confirmi la contrasenya.";
+        $confirm_password_err = "Por favor, confirme la contraseña introducida.";
     } else {
         $confirm_password = trim($_POST["confirm_password"]);
         if (empty($password_err) && ($password != $confirm_password)) {
-            $confirm_password_err = "Les contrasenyes no coincideixen.";
+            $confirm_password_err = "Las contraseñas no coinciden.";
         }
     }
  
@@ -111,13 +111,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    if(isset($upload_image) and !empty($upload_image)) {
 
    } else {
-    echo "No hay imagen seleccionada"; 
+    echo "No hay imagen seleccionada."; 
 
    }
 
     } else {
         
-        $upload_image_err = "Si us plau, introduïu imatge.";
+        $upload_image_err = "Por favor, introducir una imagen de nuevo.";
     }
 
 ?>
@@ -156,7 +156,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Redirect to login page
                 header("location: adminTeachers.php");
             } else {
-                echo "Oops! Something went wrong. Please try again later.";
+                echo "Error en la base de datos.";
             }
 
             // Close statement
@@ -195,8 +195,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
     <div class="wrapper">
-        <h2>Afegir professor</h2>
-        <p>Crear compte de professor</p>
+        <h2>Añadir profesor</h2>
+        <p>Crear cuenta de profesor</p>
 
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data" >
             
@@ -207,32 +207,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <span class="invalid-feedback"><?php echo $dni_err; ?></span>
             </div>
             <div class="form-group">
-                <label>Nom</label>
+                <label>Nombre</label>
                 <input type="text" name="name" class="form-control <?php echo (!empty($name_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $name; ?>">
                 <span class="invalid-feedback"><?php echo $name_err; ?></span>
             </div>
             <div class="form-group">
-                <label>Cognoms</label>
+                <label>Apellidos</label>
                 <input type="text" name="surname" class="form-control <?php echo (!empty($surname_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $surname; ?>">
                 <span class="invalid-feedback"><?php echo $surname_err; ?></span>
             </div>
             <div class="form-group">
-                <label>Títol</label>
+                <label>Título</label>
                 <input type="text" name="title" class="form-control <?php echo (!empty($title_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $title; ?>">
                 <span class="invalid-feedback"><?php echo $title_err; ?></span>
             </div>
             <div class="form-group">
-                <label>Descripció</label>
+                <label>Descripción</label>
                 <input type="text" name="description" class="form-control <?php echo (!empty($description_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $description; ?>">
                 <span class="invalid-feedback"><?php echo $description_err; ?></span>
             </div>
             <div class="form-group">
-                <label>Constrasenya</label>
+                <label>Contraseña</label>
                 <input type="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>">
                 <span class="invalid-feedback"><?php echo $password_err; ?></span>
             </div>
             <div class="form-group">
-                <label>Confirmar constrasenya</label>
+                <label>Confirmar contraseña</label>
                 <input type="password" name="confirm_password" class="form-control <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_password; ?>">
                 <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
             </div>
@@ -246,7 +246,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
          
 
-            <p><a href="adminTeachers.php">Panel professors</a></p>
+            <p><a href="adminTeachers.php">Panel profesores</a></p>
         </form>
     </div>
 </body>

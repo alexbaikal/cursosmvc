@@ -23,7 +23,7 @@
 
         <div id="loginBox">
             <p><a href="student/studentLogin.php" class="btn btn-primary">Estudiant</a></p>
-            <p><a href="login.php" class="btn btn-primary">Professor</a></p>
+            <p><a href="teacher/teacherLogin.php" class="btn btn-primary">Professor</a></p>
         </div>
     </div>
 

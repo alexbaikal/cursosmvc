@@ -21,7 +21,7 @@
     exit;
   }
   ?>
-  <h1>Editar professor</h1>
+  <h1>Editar profesor</h1>
 
   <div style="display: flex; justify-content: center; margin-bottom: 20px; align-items:center;">
 
@@ -68,23 +68,23 @@
           <?php
           echo "<input type='hidden' name='dni' value='" . $teacher['dni'] . "' />";
 
-          echo "<label for='name'>Nom</label>";
+          echo "<label for='name'>Nombre</label>";
 
           echo "<input type='text' name='name' value='" . $teacher['name'] . "' />";
 
-          echo "<label for='surname'>Cognoms</label>";
+          echo "<label for='surname'>Apellidos</label>";
 
           echo "<input type='text' name='surname' value='" . $teacher['surname'] . "' />";
 
-          echo "<label for='title'>Títol</label>";
+          echo "<label for='title'>Título</label>";
 
           echo "<input type='text' name='title' value='" . $teacher['title'] . "' />";
 
-          echo "<label for='description'>Descripció</label>";
+          echo "<label for='description'>Descripción</label>";
 
           echo "<input type='text' name='description' value='" . $teacher['description'] . "' />";
 
-          echo "<label for='image'>Imatge</label>";
+          echo "<label for='image'>Imagen</label>";
 
           //create a file input and display stored image on '../profilepics/$teacher['image']'
 
@@ -137,12 +137,12 @@
 
         if ($result == null) {
 
-          echo "No s'ha pogut editar el professor amb el DNI: " . $_POST['dni'];
+          echo "No se ha podido editar el profesor con el DNI: " . $_POST['dni'];
 
           exit;
         } else {
 
-          echo "S'ha editat el professor amb el DNI: " . $_POST['dni'];
+          echo "Se ha editado el profesor con el DNI: " . $_POST['dni'];
         }
       }
      else {
@@ -155,12 +155,12 @@
 
       if ($result == null) {
 
-        echo "No s'ha pogut editar el professor amb el DNI: " . $_POST['dni'];
+        echo "No se ha podido editar el profesor con el DNI: " . $_POST['dni'];
 
         exit;
       } else {
 
-        echo "S'ha editar el professor amb el DNI: " . $_POST['dni'];
+        echo "Se ha editado el profesor con el DNI: " . $_POST['dni'];
       }
     }
     header("Refresh:2");
@@ -172,7 +172,7 @@
 
   ?>
 </div>
-<a href="adminTeachers.php" class="btn btn-primary"><- Tornar</a>
+<a href="adminTeachers.php" class="btn btn-primary"><- Volver</a>
 
 </body>
 

@@ -23,9 +23,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Validate DNI
     if (empty(trim($_POST["teacher_id"]))) {
-        $teacher_id_err = "Si us plau, introduïu cognoms.";
+        $teacher_id_err = "Por favor, introducir apellidos.";
     } elseif (!preg_match('/^[a-zA-Z0-9_]+$/', trim($_POST["teacher_id"]))) {
-        $teacher_id_err = "El DNI només pot incluïr lletres, números o barres baixes.";
+        $teacher_id_err = "El DNI sólo puede contener letras, números o barras bajas.";
     } else {
 
         // Set parameters
@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Validate name
     if (empty(trim($_POST["name"]))) {
-        $name_err = "Si us plau, introduïu un nom.";
+        $name_err = "Por favor, introducir un numbre.";
     } else {
 
         // Set parameters

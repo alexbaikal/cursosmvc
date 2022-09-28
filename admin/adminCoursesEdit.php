@@ -149,7 +149,7 @@
 
                 ?>
             </div>
-            <a href="adminCourses.php" class="btn btn-primary"><- Tornar</a>
+            <a href="adminCourses.php" class="btn btn-primary"><- Volver</a>
 
 </body>
 

@@ -64,15 +64,15 @@
 
 <th>DNI</th>
 
-<th>Nom</th>
+<th>Nombre</th>
 
-<th>Cognoms</th>
+<th>Apellidos</th>
 
-<th>Títol</th>
+<th>Título</th>
 
-<th>Descripció</th>
+<th>Descripción</th>
 
-<th>Imatge</th>
+<th>Imagen</th>
 
 </tr>";
 
@@ -85,7 +85,7 @@
         $deleteQuery = "DELETE FROM teacher WHERE dni = '" . $row['dni'] . "'";
 
         if (mysqli_query($link, $deleteQuery)  === TRUE) {
-          echo "Deleted successfuly: " . $row['dni'];
+          echo "Eliminado correctamente: " . $row['dni'];
           if (isset($row['image'])) {
             //delete image from server inside ../profilepics
             unlink("../profilepics/" . $row['image']);
@@ -141,9 +141,9 @@
     ?>
   </div>
   <button type="button" onclick="window.location.href='adminPanel.php'" class="btn btn-primary">
-    <- Tornar panel administrador</button>
+    <- Volver panel administrador</button>
 
-      <button type="button" onclick="window.location.href='adminTeachersAdd.php'" class="btn btn-primary">+ Afegir professor</button>
+      <button type="button" onclick="window.location.href='adminTeachersAdd.php'" class="btn btn-primary">+ Añadir profesor</button>
 
 </body>
 

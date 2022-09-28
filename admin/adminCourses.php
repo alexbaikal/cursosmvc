@@ -156,8 +156,8 @@
 
     ?>
   </div>
-  <a href="adminPanel.php" class="btn btn-primary"><- Tornar</a>
-  <button type="button" onclick="window.location.href='adminCoursesAdd.php'" class="btn btn-primary">+ Afegir curs</button>
+  <a href="adminPanel.php" class="btn btn-primary"><- Volver</a>
+  <button type="button" onclick="window.location.href='adminCoursesAdd.php'" class="btn btn-primary">+ Añadir curss</button>
 
 </body>
 

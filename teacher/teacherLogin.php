@@ -93,9 +93,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <head>
     <meta charset="UTF-8">
+    <img id="imgAjuntament" src="../assets/ajuntament.png" alt="ajuntament de badalona" />
+    <h1 id="rainbow-title">InfoBDN</h1>
     <title>Login</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./styles/login.css">
+    <link rel="stylesheet" href="./styles/teacherLogin.css">
 
 </head>
 
@@ -113,20 +115,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div class="form-group">
-                <label>Usuario</label>
-                <input placeholder="usuario" title="usuario" type="text" name="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
+                <label>DNI</label>
+                <input placeholder="DNI" title="DNI" type="text" name="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
                 <span class="invalid-feedback"><?php echo $username_err; ?></span>
             </div>
             <div class="form-group">
                 <label>Contraseña</label>
-                <input type="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>">
+                <input placeholder="contraseña" type="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>">
                 <span class="invalid-feedback"><?php echo $password_err; ?></span>
             </div>
-            <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Login">
+            <div class="submit-btn">
+                <input type="submit" class="btn btn-primary" value="Iniciar sesión">
             </div>
-            <p>¿No tienes cuenta? <a href="register.php">¡Regístrate ahora! :)</a>.</p>
         </form>
+        <button type="button" onclick="window.location.href='../index.php'" class="btn btn-primary back-btn">
+            <- Volver inicio</button>
     </div>
 </body>
 
