@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 23, 2022 at 10:19 AM
+-- Generation Time: Oct 05, 2022 at 02:25 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -61,7 +61,19 @@ CREATE TABLE `courses` (
 --
 
 INSERT INTO `courses` (`id_course`, `teacher_id`, `name`, `description`, `duration`, `start`, `end`) VALUES
-(2, 66, 'curso', 'descripcion curso', 12, 1663970400, 1663884000);
+(4, 69, 'Web', 'pppp', 45, 1661983200, 1664056800);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `enrollment`
+--
+
+CREATE TABLE `enrollment` (
+  `id_enrollment` int(100) NOT NULL,
+  `id_student` int(100) NOT NULL,
+  `id_course` int(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -73,6 +85,31 @@ CREATE TABLE `passwords` (
   `id` int(148) NOT NULL,
   `password` varchar(1024) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `students`
+--
+
+CREATE TABLE `students` (
+  `id_student` int(100) NOT NULL,
+  `DNI` varchar(10) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `surname` varchar(30) NOT NULL,
+  `age` int(3) NOT NULL,
+  `id_course` int(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `image` varchar(100) NOT NULL,
+  `created_at` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `students`
+--
+
+INSERT INTO `students` (`id_student`, `DNI`, `name`, `surname`, `age`, `id_course`, `password`, `image`, `created_at`) VALUES
+(1, '433445D', 'suka', 'blyat', 0, 0, '$2y$10$1CprSc.b5w9NFm557U8lpOfwtHaODWeZHJ05UJg9TnCM3IqzI77V2', '1664971802tamaño-foto-dni.jpg', '2022-10-05 13:10:02');
 
 -- --------------------------------------------------------
 
@@ -97,9 +134,9 @@ CREATE TABLE `teacher` (
 --
 
 INSERT INTO `teacher` (`teacher_id`, `dni`, `name`, `surname`, `title`, `description`, `password`, `created_at`, `image`) VALUES
-(66, 'rtert', 'Alex', 'Baik', 'DAW', 'Bó.', '$2y$10$CXMC01EnG8icwvhoMU7ZL.D47l6QtZWUsRZ1kSuluD4TCZdBaOdLi', '2022-09-21 08:59:42', '1663918054download.jpg'),
+(66, 'rtert', 'Alex', 'Baik', 'DAW', 'Bó.', '$2y$10$CXMC01EnG8icwvhoMU7ZL.D47l6QtZWUsRZ1kSuluD4TCZdBaOdLi', '2022-09-21 08:59:42', '1663925826AnyDesk.exe'),
 (68, 'wergwerg', 'wergwerg', 'wergwreg', 'wergwerg', 'admin', '$2y$10$nsfVfGt4qEW8KZyYgZ8ePeS4SnWS/6ayOaYe3NBSuX7aPxHn5o16W', '2022-09-22 06:51:24', '1663822284'),
-(69, '3563464364D', 'Nombre', 'Apellidos', 'Telecos', 'Profe telecos', '$2y$10$VNfydqd8Wpr8q2uvgPP6SeBcYVkUErVyU7NefRQnj6S5GUq/4LxAm', '2022-09-23 08:21:50', '1663917710download.jpg');
+(69, '3563464364D', 'Nombre', 'Apellidos', 'Telecos', 'Profe telecos', '$2y$10$VNfydqd8Wpr8q2uvgPP6SeBcYVkUErVyU7NefRQnj6S5GUq/4LxAm', '2022-09-23 08:21:50', '1663925931download.jpg');
 
 --
 -- Indexes for dumped tables
@@ -119,10 +156,26 @@ ALTER TABLE `courses`
   ADD KEY `teacher_id` (`teacher_id`);
 
 --
+-- Indexes for table `enrollment`
+--
+ALTER TABLE `enrollment`
+  ADD PRIMARY KEY (`id_enrollment`),
+  ADD KEY `id_student` (`id_student`),
+  ADD KEY `id_course` (`id_course`);
+
+--
 -- Indexes for table `passwords`
 --
 ALTER TABLE `passwords`
   ADD KEY `id` (`id`);
+
+--
+-- Indexes for table `students`
+--
+ALTER TABLE `students`
+  ADD PRIMARY KEY (`id_student`),
+  ADD UNIQUE KEY `id_student` (`id_student`,`id_course`),
+  ADD UNIQUE KEY `DNI` (`DNI`);
 
 --
 -- Indexes for table `teacher`
@@ -138,7 +191,19 @@ ALTER TABLE `teacher`
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `id_course` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_course` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `enrollment`
+--
+ALTER TABLE `enrollment`
+  MODIFY `id_enrollment` int(100) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `students`
+--
+ALTER TABLE `students`
+  MODIFY `id_student` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `teacher`
@@ -155,6 +220,13 @@ ALTER TABLE `teacher`
 --
 ALTER TABLE `courses`
   ADD CONSTRAINT `courses_ibfk_1` FOREIGN KEY (`teacher_id`) REFERENCES `teacher` (`teacher_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `enrollment`
+--
+ALTER TABLE `enrollment`
+  ADD CONSTRAINT `enrollment_ibfk_1` FOREIGN KEY (`id_student`) REFERENCES `students` (`id_student`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `enrollment_ibfk_2` FOREIGN KEY (`id_course`) REFERENCES `courses` (`id_course`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `passwords`

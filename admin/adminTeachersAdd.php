@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Validate DNI
     if (empty(trim($_POST["dni"]))) {
-        $dni_err = "Por favor, introducir apellidos.";
+        $dni_err = "Por favor, introducir DNI.";
     } elseif (!preg_match('/^[a-zA-Z0-9_]+$/', trim($_POST["dni"]))) {
         $dni_err = "El DNI sólo puede incluir letras, números o barras bajas.";
     } else {
@@ -97,7 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
  
-    // Validate description
+    // Validate file
     if(isset($_POST['subbtn'])) {
          // Set parameters
          $param_upload_image = $_FILES['uploadfile']['name'];
@@ -127,7 +127,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <?php
 
     // Check input errors before inserting in database
-    if (empty($dni_err) && empty($name_err) && empty($surname_err) && empty($title_err) && empty($description_err) && empty($password_err) && empty($password_err) && empty($confirm_password_err) && empty($upload_image_err)) {
+    if (empty($dni_err) && empty($name_err) && empty($surname_err) && empty($title_err) && empty($description_err) && empty($password_err) && empty($confirm_password_err) && empty($upload_image_err)) {
 
         // Prepare an insert statement
         $sql = "INSERT INTO teacher (dni, name, surname, title, description, password, image) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -237,11 +237,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
             </div>
             <p>Foto de perfil</p>
-            <input type="file" name="uploadfile" <?php echo (!empty($file_upload_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $file_upload; ?>">
+            <input type="file" name="uploadfile" <?php echo (!empty($upload_image_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $file_upload; ?>">
             <div class="form-group">
                 <br />
-                <input type="submit" name="subbtn" class="btn btn-primary" value="Crear">
-                <input type="reset" class="btn btn-secondary ml-2" value="Esborrar">
+                <input type="submit" name="subbtn" class="btn btn-primary" value="Registrar">
+                <input type="reset" class="btn btn-secondary ml-2" value="Borrar campos">
             </div>
 
          
