@@ -15,32 +15,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif (!preg_match('/^[a-zA-Z0-9]+$/', trim($_POST["DNI"]))) {
         $DNI_err = "El DNI sólo puede contener letras y números.";
     } else {
-        // Prepare a select statement
-        $sql = "SELECT id_student FROM students WHERE DNI = ?";
+        // Validar que el DNI sea Español
+        $dni = trim($_POST["dni"]);
+        if (!preg_match('/^[0-9]{8}[A-Z]$/', $dni)) {
+            $dni_err = "El DNI no es válido.";
+        } else {
 
-        if ($stmt = mysqli_prepare($link, $sql)) {
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $param_DNI);
+            // Prepare a select statement
+            $sql = "SELECT id_student FROM students WHERE DNI = ?";
 
-            // Set parameters
-            $param_DNI = trim($_POST["DNI"]);
+            if ($stmt = mysqli_prepare($link, $sql)) {
+                // Bind variables to the prepared statement as parameters
+                mysqli_stmt_bind_param($stmt, "s", $param_DNI);
 
-            // Attempt to execute the prepared statement
-            if (mysqli_stmt_execute($stmt)) {
-                /* store result */
-                mysqli_stmt_store_result($stmt);
+                // Set parameters
+                $param_DNI = trim($_POST["DNI"]);
 
-                if (mysqli_stmt_num_rows($stmt) == 1) {
-                    $DNI_err = "Ya existe un usuario con este DNI.";
+                // Attempt to execute the prepared statement
+                if (mysqli_stmt_execute($stmt)) {
+                    /* store result */
+                    mysqli_stmt_store_result($stmt);
+
+                    if (mysqli_stmt_num_rows($stmt) == 1) {
+                        $DNI_err = "Ya existe un usuario con este DNI.";
+                    } else {
+                        $DNI = trim($_POST["DNI"]);
+                    }
                 } else {
-                    $DNI = trim($_POST["DNI"]);
+                    echo "Hubo un error en la base de datos. Inténtalo de nuevo más tarde.";
                 }
-            } else {
-                echo "Hubo un error en la base de datos. Inténtalo de nuevo más tarde.";
-            }
 
-            // Close statement
-            mysqli_stmt_close($stmt);
+                // Close statement
+                mysqli_stmt_close($stmt);
+            }
         }
     }
 
@@ -83,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Validate surname
     if (empty(trim($_POST["surname"]))) {
         $surname_err = "Por favor, introducir apellidos.";
-    } elseif (!preg_match('/^[a-zA-Z0-9_]+$/', trim($_POST["surname"]))) {
+    } elseif (!preg_match('/^[a-zA-Z0-9_ ]+$/', trim($_POST["surname"]))) {
         $surname_err = "Los apellidos sólo pueden contener letras. números y barras bajas.";
     } else {
         // Prepare a select statement
@@ -139,7 +146,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if (mysqli_stmt_num_rows($stmt) == 1) {
                     $DNI_err = "Ya existe un usuario con este DNI.";
                 } else {
-                    $surname = trim($_POST["surname"]);
+                    $age = trim($_POST["age"]);
                 }
             } else {
                 echo "Hubo un error en la base de datos. Inténtalo de nuevo más tarde.";

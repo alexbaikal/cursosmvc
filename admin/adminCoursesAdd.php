@@ -3,8 +3,8 @@
 session_start();
 
 // Check if the user is logged in, if not then redirect him to login page
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-    header("location: ../index.php");
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION["role"] !== "admin") {
+    header("location: adminLogin.php");
     exit;
 }
 ?>
@@ -75,14 +75,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $start_err = "Si us plau, introduïu una data d'inici.";
     } else {
         $param_start = trim($_POST["start"]);
-    }
 
     // Validate end
     if (empty(trim($_POST["end"]))) {
         $end_err = "Si us plau, introduïu una data de finalització.";
     } else {
         $param_end = trim($_POST["end"]);
+
+        //check if start is before end and start is above today
+        if ($start > $end) {
+            $end_err = "La data de finalització ha de ser posterior a la data d'inici.";
+        } elseif ($start < time()) {
+            $start_err = "La data d'inici ha de ser posterior a la data actual.";
+        }
     }
+    }
+
 
 ?>
 
@@ -114,14 +122,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Redirect to login page
                 header("location: adminCourses.php");
             } else {
-                echo "Oops! Something went wrong. Please try again later.";
             }
 
             // Close statement
             mysqli_stmt_close($stmt);
         }
     } else {
-        echo "Oops! Something went wrong. Please try again later.";
     }
 
     // Close connection

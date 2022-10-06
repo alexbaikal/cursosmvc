@@ -16,12 +16,12 @@
   session_start();
 
   // Check if the user is logged in, if not then redirect him to login page
-  if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION["role"] !== "admin") {
-    header("location: adminLogin.php");
+  if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION["role"] !== "student") {
+    header("location: studentLogin.php");
     exit;
   }
   ?>
-  <h1>Administrar cursos</h1>
+  <h1>Gestionar matriculas</h1>
   <?php
   require_once "../config.php";
 
@@ -39,8 +39,8 @@
   //add a search bar
 
   echo "<div style='display: flex; justify-content: center; margin-bottom: 20px; align-items:center;'>";
-  echo "<form action='adminCourses.php' method='GET'>";
-  echo "<input type='text' name='search' placeholder='Cerca per nom del curs o DNI'>";
+  echo "<form action='studentEnrollments.php' method='GET'>";
+  echo "<input type='text' name='search' placeholder='Cerca per nom o descripció del curs'>";
   echo "<input type='submit' value='Cerca'>";
   echo "</form>";
   echo "</div>";
@@ -49,7 +49,7 @@
   $query = "SELECT * FROM courses";
   if (isset($_GET['search'])) {
 
-    $query = 'SELECT * FROM courses WHERE teacher_id LIKE "%' . $_GET['search'] . '%" OR name LIKE "%' . $_GET['search'] . '%"';
+    $query = 'SELECT * FROM courses WHERE teacher_id LIKE "%' . $_GET['search'] . '%" OR name LIKE "%' . $_GET['search'] . '%" OR description LIKE "%' . $_GET['search'] . '%"';
   }
 
   $courses = mysqli_query($con, $query);
@@ -81,6 +81,9 @@
 
 <th>Fi</th>
 
+<th>Nota</th>
+<th>Opciones</th>
+
 </tr>";
 
     //select from teacher where dni coincides with the one in the url
@@ -96,24 +99,47 @@
       exit;
     }
 
+ 
 
     while ($course_row = mysqli_fetch_array($courses)) {
 
-      if (isset($_GET['delete_id_course']) && $course_row['id_course'] == $_GET['delete_id_course']) {
 
-        $deleteQuery = "DELETE FROM courses WHERE id_course = '" . $course_row['id_course'] . "'";
 
-        if (mysqli_query($con, $deleteQuery)  === TRUE) {
-          echo "Deleted successfuly: " . $course_row['id_course'];
-          header("Refresh:2");
+      if (isset($_GET['quit_id_course']) && $course_row['id_course'] == $_GET['quit_id_course']) {
+        //remove enrollment where id_course and id_student coincide
+        $quitQuery = 'DELETE FROM enrollment WHERE id_course = ' . $_GET['quit_id_course'] . ' AND id_student = ' . $_SESSION['id'];
+
+        //execute query
+
+        $quitResult = mysqli_query($con, $quitQuery);
+
+        if ($quitResult == null) {
+
+          echo "No s'ha pogut eliminar la matricula";
+
+          exit;
         } else {
-          echo "error";
-        }
 
-        //header('location:adminTeachers.php');
-        //exit;
+          echo "Matricula eliminada";
+          header('location:studentEnrollments.php');
 
+          exit;
+        }    
+      
+      
       }
+ //check if $course_row['id_course'] is in the enrollment table for the current user ($_SESSION['id'])
+      $enrollmentQuery = "SELECT * FROM enrollment WHERE id_course = " . $course_row['id_course'] . " AND id_student = " . $_SESSION['id'];
+
+      $resultQuery = mysqli_query($con, $enrollmentQuery);
+
+      //check if resultQuery is empty
+
+  
+
+      if ($course_row['start'] > time() && mysqli_num_rows($resultQuery) > 0) {
+
+       
 
       echo "<tr>";
       //pick theacher name that coincides with course_row teacher_id
@@ -134,15 +160,16 @@
 
       echo "<form method='post' action=" . htmlspecialchars($_SERVER["PHP_SELF"]) . " >";
 
-      echo "<td><a href='adminCoursesEdit.php?id_course=" . $course_row['id_course'] . "'>Editar</a>";
+      echo "<td>-</td>";
 
-      echo "<td><a href='adminCourses.php?delete_id_course=" . $course_row['id_course'] . "'>Eliminar</a>";
+      echo "<td><a href='studentEnrollments.php?quit_id_course=" . $course_row['id_course'] . "'>Baja</a>";
 
       echo "</td>";
 
       echo "</tr>";
-
+    }
       mysqli_data_seek($result, 0);
+
     }
 
 
@@ -150,14 +177,11 @@
 
     echo "</table>";
 
-
-
     mysqli_close($con);
 
     ?>
   </div>
-  <a href="adminPanel.php" class="btn btn-primary"><- Volver</a>
-  <button type="button" onclick="window.location.href='adminCoursesAdd.php'" class="btn btn-primary">+ Añadir curso</button>
+  <a href="studentPanel.php" class="btn btn-primary"><- Volver</a>
 
 </body>
 

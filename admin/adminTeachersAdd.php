@@ -3,8 +3,8 @@
 session_start();
 
 // Check if the user is logged in, if not then redirect him to login page
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-    header("location: ../index.php");
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION["role"] !== "admin") {
+    header("location: adminLogin.php");
     exit;
 }
 ?>
@@ -25,13 +25,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty(trim($_POST["dni"]))) {
         $dni_err = "Por favor, introducir DNI.";
     } elseif (!preg_match('/^[a-zA-Z0-9_]+$/', trim($_POST["dni"]))) {
-        $dni_err = "El DNI sólo puede incluir letras, números o barras bajas.";
+        $dni_err = "El DNI sólo puede incluir letras o números.";
     } else {
-
-        // Set parameters
-        $param_dni = trim($_POST["dni"]);
-
+        // Validar que el DNI sea Español
         $dni = trim($_POST["dni"]);
+        if (!preg_match('/^[0-9]{8}[A-Z]$/', $dni)) {
+            $dni_err = "El DNI no es válido.";
+        } else {
+            // Set parameters
+            $param_dni = trim($_POST["dni"]);
+
+            $dni = trim($_POST["dni"]);
+        }
     }
 
 
@@ -69,13 +74,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
 
-  
-        // Set parameters
-        $param_description = trim($_POST["description"]);
+
+    // Set parameters
+    $param_description = trim($_POST["description"]);
 
 
-        $description = trim($_POST["description"]);
-    
+    $description = trim($_POST["description"]);
+
 
 
     // Validate password
@@ -96,27 +101,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $confirm_password_err = "Las contraseñas no coinciden.";
         }
     }
- 
+
     // Validate file
-    if(isset($_POST['subbtn'])) {
-         // Set parameters
-         $param_upload_image = $_FILES['uploadfile']['name'];
+    if (isset($_POST['subbtn'])) {
+        // Set parameters
+        $param_upload_image = $_FILES['uploadfile']['name'];
 
-   $upload_image = $_FILES['uploadfile']['name'];
+        $upload_image = $_FILES['uploadfile']['name'];
 
 
-   $tmp_upload_image = $_FILES['uploadfile']['tmp_name'];
-   echo"". $upload_image;
+        $tmp_upload_image = $_FILES['uploadfile']['tmp_name'];
+        echo "" . $upload_image;
 
-   if(isset($upload_image) and !empty($upload_image)) {
-
-   } else {
-    echo "No hay imagen seleccionada."; 
-
-   }
-
+        if (isset($upload_image) and !empty($upload_image)) {
+        } else {
+            echo "No hay imagen seleccionada.";
+        }
     } else {
-        
+
         $upload_image_err = "Por favor, introducir una imagen de nuevo.";
     }
 
@@ -143,12 +145,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $param_title = $title;
             $param_description = $description;
             $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
-            $param_upload_image = time().$upload_image;
+            $param_upload_image = time() . $upload_image;
 
             $folder = '../profilepics/';
 
 
-            move_uploaded_file($tmp_upload_image, $folder.time().$upload_image);
+            move_uploaded_file($tmp_upload_image, $folder . time() . $upload_image);
 
 
             // Attempt to execute the prepared statement
@@ -198,10 +200,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h2>Añadir profesor</h2>
         <p>Crear cuenta de profesor</p>
 
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data" >
-            
-        
-        <div class="form-group">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
+
+
+            <div class="form-group">
                 <label>DNI</label>
                 <input type="text" name="dni" class="form-control <?php echo (!empty($dni_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $dni; ?>">
                 <span class="invalid-feedback"><?php echo $dni_err; ?></span>
@@ -244,7 +246,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="reset" class="btn btn-secondary ml-2" value="Borrar campos">
             </div>
 
-         
+
 
             <p><a href="adminTeachers.php">Panel profesores</a></p>
         </form>
