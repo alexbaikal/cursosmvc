@@ -41,7 +41,7 @@
   echo "<div style='display: flex; justify-content: center; margin-bottom: 20px; align-items:center;'>";
   echo "<form action='adminCourses.php' method='GET'>";
   echo "<input type='text' name='search' placeholder='Cerca per nom del curs o DNI'>";
-  echo "<input type='submit' value='Cerca'>";
+  echo "<input type='submit' value='🔎'>";
   echo "</form>";
   echo "</div>";
 
@@ -156,8 +156,8 @@
 
     ?>
   </div>
-  <a href="adminPanel.php" class="btn btn-primary"><- Volver</a>
-  <button type="button" onclick="window.location.href='adminCoursesAdd.php'" class="btn btn-primary">+ Añadir curso</button>
+  <a href="adminPanel.php" class="btn btn-primary">◀️ Volver</a>
+  <button type="button" onclick="window.location.href='adminCoursesAdd.php'" class="btn btn-primary">➕ Añadir curso</button>
 
 </body>
 

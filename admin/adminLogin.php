@@ -133,8 +133,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="form-group">
                 <button type="button" onclick="window.location.href='../index.php'" class="btn btn-primary back-btn">
-                    <- Volver inicio</button>
-                        <input type="submit" class="btn btn-primary" value="Iniciar sesión">
+                ◀️ Volver inicio</button>
+                        <input type="submit" class="btn btn-primary" value="🛠️Iniciar sesión">
             </div>
         </form>
 

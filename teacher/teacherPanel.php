@@ -23,11 +23,11 @@
             exit;
         }
         ?>
-        <a href="./teacherCourses.php" class="btn btn-primary">Ver cursos</a>
+        <a href="./teacherCourses.php" class="btn btn-primary">👁️ Ver cursos 🔎</a>
       <!--<a href="./studentEnrollments.php" class="btn btn-primary">Gestionar cursos</a>-->
     </div>
-
-    <p><a href="../logout.php"><u>Cerrar sesión</u></a></p>
+        <br/>
+    <p><a href="../logout.php"><u>Cerrar sesión ❌</u></a></p>
 </body>
 
 </html>

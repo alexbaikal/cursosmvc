@@ -161,7 +161,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="wrapper">
         <h2>Afegir curs</h2>
-        <p>Crear curs</p>
+        <p>➕Crear curs</p>
 
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
 

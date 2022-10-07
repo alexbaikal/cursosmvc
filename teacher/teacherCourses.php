@@ -41,7 +41,7 @@
   echo "<div style='display: flex; justify-content: center; margin-bottom: 20px; align-items:center;'>";
   echo "<form action='teacherCourses.php' method='GET'>";
   echo "<input type='text' name='search' placeholder='Cerca per nom del curs o DNI'>";
-  echo "<input type='submit' value='Cerca'>";
+  echo "<input type='submit' value='🔎'>";
   echo "</form>";
   echo "</div>";
 
@@ -157,7 +157,7 @@
 
             echo "<form method='post' action=" . htmlspecialchars($_SERVER["PHP_SELF"]) . " >";
 
-            echo "<td><a href='teacherCourse.php?id_course=" . $course_row['id_course'] . "'>Ver</a>";
+            echo "<td><a href='teacherCourse.php?id_course=" . $course_row['id_course'] . "'>👁️</a>";
 
             echo "</td>";
 
@@ -178,7 +178,7 @@
     ?>
   </div>
   <a href="teacherPanel.php" class="btn btn-primary">
-    <- Volver</a>
+  ◀️ Volver</a>
 
 </body>
 

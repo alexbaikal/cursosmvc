@@ -41,7 +41,7 @@
   echo "<div style='display: flex; justify-content: center; margin-bottom: 20px; align-items:center;'>";
   echo "<form action='studentEnrollments.php' method='GET'>";
   echo "<input type='text' name='search' placeholder='Cerca per nom o descripció del curs'>";
-  echo "<input type='submit' value='Cerca'>";
+  echo "<input type='submit' value='🔎'>";
   echo "</form>";
   echo "</div>";
 

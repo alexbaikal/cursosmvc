@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.3
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Хост: 127.0.0.1
--- Время создания: Окт 06 2022 г., 21:23
--- Версия сервера: 10.4.24-MariaDB
--- Версия PHP: 7.4.28
+-- Host: 127.0.0.1
+-- Generation Time: Oct 07, 2022 at 10:22 AM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- База данных: `courses`
+-- Database: `courses`
 --
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `admin`
+-- Table structure for table `admin`
 --
 
 CREATE TABLE `admin` (
@@ -34,7 +34,7 @@ CREATE TABLE `admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Дамп данных таблицы `admin`
+-- Dumping data for table `admin`
 --
 
 INSERT INTO `admin` (`id`, `password`, `username`) VALUES
@@ -43,7 +43,7 @@ INSERT INTO `admin` (`id`, `password`, `username`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `courses`
+-- Table structure for table `courses`
 --
 
 CREATE TABLE `courses` (
@@ -57,49 +57,30 @@ CREATE TABLE `courses` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Дамп данных таблицы `courses`
+-- Dumping data for table `courses`
 --
 
 INSERT INTO `courses` (`id_course`, `teacher_id`, `name`, `description`, `duration`, `start`, `end`) VALUES
 (4, 69, 'Web', 'pppp', 45, 1661983200, 1664056800),
-(5, 66, 'Telecosº', 'El mejor curso', 13, 1665093600, 1665180000),
 (6, 70, 'Cyust', 'ejtrweh', 134, 1666303200, 1666994400);
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `enrollment`
+-- Table structure for table `enrollment`
 --
 
 CREATE TABLE `enrollment` (
   `id_enrollment` int(100) NOT NULL,
   `id_student` int(100) NOT NULL,
-  `id_course` int(100) NOT NULL
+  `id_course` int(100) NOT NULL,
+  `grade` int(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Дамп данных таблицы `enrollment`
---
-
-INSERT INTO `enrollment` (`id_enrollment`, `id_student`, `id_course`) VALUES
-(28, 2, 5),
-(29, 3, 6);
-
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `passwords`
---
-
-CREATE TABLE `passwords` (
-  `id` int(148) NOT NULL,
-  `password` varchar(1024) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `students`
+-- Table structure for table `students`
 --
 
 CREATE TABLE `students` (
@@ -114,7 +95,7 @@ CREATE TABLE `students` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Дамп данных таблицы `students`
+-- Dumping data for table `students`
 --
 
 INSERT INTO `students` (`id_student`, `DNI`, `name`, `surname`, `age`, `password`, `image`, `created_at`) VALUES
@@ -125,7 +106,7 @@ INSERT INTO `students` (`id_student`, `DNI`, `name`, `surname`, `age`, `password
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `teacher`
+-- Table structure for table `teacher`
 --
 
 CREATE TABLE `teacher` (
@@ -141,34 +122,33 @@ CREATE TABLE `teacher` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Дамп данных таблицы `teacher`
+-- Dumping data for table `teacher`
 --
 
 INSERT INTO `teacher` (`teacher_id`, `dni`, `name`, `surname`, `title`, `description`, `password`, `created_at`, `image`) VALUES
-(66, 'rtert', 'Alex', 'Baik', 'DAW', 'Bó.', '$2y$10$CXMC01EnG8icwvhoMU7ZL.D47l6QtZWUsRZ1kSuluD4TCZdBaOdLi', '2022-09-21 08:59:42', '1663925826AnyDesk.exe'),
 (68, 'wergwerg', 'wergwerg', 'wergwreg', 'wergwerg', 'admin', '$2y$10$nsfVfGt4qEW8KZyYgZ8ePeS4SnWS/6ayOaYe3NBSuX7aPxHn5o16W', '2022-09-22 06:51:24', '1663822284'),
 (69, '3563464364D', 'Nombre', 'Apellidos', 'Telecos', 'Profe telecos', '$2y$10$VNfydqd8Wpr8q2uvgPP6SeBcYVkUErVyU7NefRQnj6S5GUq/4LxAm', '2022-09-23 08:21:50', '1663925931download.jpg'),
 (70, '23425454E', '321321', '321321', '321321', '321321', '$2y$10$Dj5hWi5JiPUbec3a2tAq4uvEMSWz8KHjOAlpUN7lNfXiWnWj/7rLm', '2022-10-06 19:28:02', '1665077282');
 
 --
--- Индексы сохранённых таблиц
+-- Indexes for dumped tables
 --
 
 --
--- Индексы таблицы `admin`
+-- Indexes for table `admin`
 --
 ALTER TABLE `admin`
   ADD KEY `id` (`id`);
 
 --
--- Индексы таблицы `courses`
+-- Indexes for table `courses`
 --
 ALTER TABLE `courses`
   ADD PRIMARY KEY (`id_course`) USING BTREE,
   ADD KEY `teacher_id` (`teacher_id`);
 
 --
--- Индексы таблицы `enrollment`
+-- Indexes for table `enrollment`
 --
 ALTER TABLE `enrollment`
   ADD PRIMARY KEY (`id_enrollment`),
@@ -176,74 +156,56 @@ ALTER TABLE `enrollment`
   ADD KEY `id_course` (`id_course`);
 
 --
--- Индексы таблицы `passwords`
---
-ALTER TABLE `passwords`
-  ADD KEY `id` (`id`);
-
---
--- Индексы таблицы `students`
+-- Indexes for table `students`
 --
 ALTER TABLE `students`
   ADD PRIMARY KEY (`id_student`),
   ADD UNIQUE KEY `DNI` (`DNI`);
 
 --
--- Индексы таблицы `teacher`
+-- Indexes for table `teacher`
 --
 ALTER TABLE `teacher`
   ADD PRIMARY KEY (`teacher_id`);
 
 --
--- AUTO_INCREMENT для сохранённых таблиц
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT для таблицы `courses`
+-- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `id_course` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_course` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT для таблицы `enrollment`
+-- AUTO_INCREMENT for table `enrollment`
 --
 ALTER TABLE `enrollment`
   MODIFY `id_enrollment` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
--- AUTO_INCREMENT для таблицы `students`
+-- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
   MODIFY `id_student` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT для таблицы `teacher`
+-- AUTO_INCREMENT for table `teacher`
 --
 ALTER TABLE `teacher`
   MODIFY `teacher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
--- Ограничения внешнего ключа сохраненных таблиц
+-- Constraints for dumped tables
 --
 
 --
--- Ограничения внешнего ключа таблицы `courses`
---
-ALTER TABLE `courses`
-  ADD CONSTRAINT `courses_ibfk_1` FOREIGN KEY (`teacher_id`) REFERENCES `teacher` (`teacher_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Ограничения внешнего ключа таблицы `enrollment`
+-- Constraints for table `enrollment`
 --
 ALTER TABLE `enrollment`
   ADD CONSTRAINT `enrollment_ibfk_1` FOREIGN KEY (`id_student`) REFERENCES `students` (`id_student`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `enrollment_ibfk_2` FOREIGN KEY (`id_course`) REFERENCES `courses` (`id_course`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Ограничения внешнего ключа таблицы `passwords`
---
-ALTER TABLE `passwords`
-  ADD CONSTRAINT `passwords_ibfk_1` FOREIGN KEY (`id`) REFERENCES `teacher` (`teacher_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

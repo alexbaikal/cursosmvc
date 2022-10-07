@@ -41,7 +41,7 @@
   echo "<div style='display: flex; justify-content: center; margin-bottom: 20px; align-items:center;'>";
   echo "<form action='adminCourses.php' method='GET'>";
   echo "<input type='text' name='search' placeholder='Cerca per nom del curs o DNI'>";
-  echo "<input type='submit' value='Cerca'>";
+  echo "<input type='submit' value='🔎'>";
   echo "</form>";
   echo "</div>";
 
@@ -155,7 +155,11 @@
 
           echo "<td>" . date('d/m/Y', $course_row['end']) . "</td>";
 
-          echo "<form method='post' action=" . htmlspecialchars($_SERVER["PHP_SELF"]) . " >";
+          //store end date in date format to compare it with current date
+          $end_date = date('d/m/Y', $course_row['end']);
+
+
+          echo "<form method='post' action=" . htmlspecialchars($_SERVER["PHP_SELF"]) . "?id_course=" . $_GET['id_course'] . ">";
 
 
           echo "</td>";
@@ -170,6 +174,7 @@
 
 
     echo "</table>";
+
 
 
     ?>
@@ -194,9 +199,12 @@
       <th>Edad</th>
 
       <th>Imagen</th>
-
-    </tr>";
-
+      
+    ";
+    if ($end_date < date('d/m/Y')) {
+      echo "<th>Nota</th>";
+      echo "</tr>";
+    }
 
 
     while ($enrollment_row = mysqli_fetch_array($enrollments)) {
@@ -207,20 +215,64 @@
         echo "<td>" . $student_row["name"] . "</td>";
         echo "<td>" . $student_row["surname"] . "</td>";
         echo "<td>" . $student_row["age"] . "</td>";
-        echo "<td>" . $student_row["image"] . "</td>";
-        echo "</tr>";
+        if (strpos($student_row['image'], 'jpg') !== false || strpos($student_row['image'], 'png') !== false || strpos($student_row['image'], 'gif') !== false || strpos($student_row['image'], 'jpeg') !== false) {
 
+          echo "<td><img style='width: 50px;height:50px' src='../profilepics/" . $student_row['image'] . "'/></td>";
+        } else {
+
+          echo "<td>S/I</td>";
+        }
+        //check if end date is lower than current date
+        if ($end_date < date('d/m/Y')) {
+      
+
+        //create a dropdown of grades from 1 to 10
+        echo "<form method='post' action=" . htmlspecialchars($_SERVER["PHP_SELF"]) . " >";
+        echo '<td><select name="grade">';
+        //check if the grade is already set
+        if ($enrollment_row['grade'] != null) {
+          echo '<option value="' . $enrollment_row['grade'] . '">' . $enrollment_row['grade'] . '</option>';
+          //create a for loop of the rest of the grades
+          for ($i = 1; $i <= 10; $i++) {
+            if ($i != $enrollment_row['grade']) {
+              echo '<option value="' . $i . '">' . $i . '</option>';
+            }
+          }
+        
+        echo "</select>";
+      } else {
+        for ($i = 1; $i <= 10; $i++) {
+          echo "<option value='" . $i . "'>" . $i . "</option>";
+
+          
+        }
+        echo "</select>";
+      }
+        echo '<input type="submit" value="✔️"></td>';
+        echo '</form>';
+        
+        $option = isset($_POST['grade']) ? $_POST['grade'] : false;
+
+        if ($option) {
+          $gradeQuery = "UPDATE enrollment SET grade = " . $_POST['grade'] . " WHERE id_course = " . $_GET["id_course"] . " AND id_student = " . $student_row["id_student"];
+          $grade = mysqli_query($con, $gradeQuery);
+        }
+
+
+      }
+
+        echo "</tr>";
       }
     }
 
-    
+
     echo "</table>";
     mysqli_close($con);
 
     ?>
-    </div>
-    <a href="teacherPanel.php" class="btn btn-primary">
-      <- Volver</a>
+  </div>
+  <a href="teacherCourses.php" class="btn btn-primary">
+  ◀️ Volver</a>
 
 </body>
 
