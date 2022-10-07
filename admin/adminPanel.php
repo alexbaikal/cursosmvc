@@ -23,8 +23,8 @@
             exit;
         }
         ?>
-        <a href="./adminCourses.php" class="btn btn-primary">✏️   Modificar cursos   🏫</a>
-        <a href="./adminTeachers.php" class="btn btn-primary">✏️Modificar profesores👩‍🏫</a>
+        <a href="./adminCourses.php" class="btn btn-primary">✏️   Gestionar cursos   🏫</a>
+        <a href="./adminTeachers.php" class="btn btn-primary">✏️Gestionar profesores👩‍🏫</a>
     </div>
 
     <p><a href="../logout.php"><u>Cerrar sesión ❌</u></a></p>

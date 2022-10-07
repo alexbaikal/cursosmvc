@@ -157,7 +157,7 @@
 
       echo "<form method='post' action=" . htmlspecialchars($_SERVER["PHP_SELF"]) . " >";
 
-      echo "<td><a href='studentCourses.php?join_id_course=" . $course_row['id_course'] . "'>Alta</a>";
+      echo "<td><a href='studentCourses.php?join_id_course=" . $course_row['id_course'] . "'>Alta 📋</a>";
 
       echo "</td>";
 
@@ -176,7 +176,7 @@
 
     ?>
   </div>
-  <a href="studentPanel.php" class="btn btn-primary"><- Volver</a>
+  <a href="studentPanel.php" class="btn btn-primary">◀️ Volver</a>
 
 </body>
 

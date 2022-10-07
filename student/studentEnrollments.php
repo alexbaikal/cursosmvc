@@ -162,7 +162,7 @@
 
       echo "<td>-</td>";
 
-      echo "<td><a href='studentEnrollments.php?quit_id_course=" . $course_row['id_course'] . "'>Baja</a>";
+      echo "<td><a href='studentEnrollments.php?quit_id_course=" . $course_row['id_course'] . "'>Baja❌</a>";
 
       echo "</td>";
 
@@ -181,7 +181,7 @@
 
     ?>
   </div>
-  <a href="studentPanel.php" class="btn btn-primary"><- Volver</a>
+  <a href="studentPanel.php" class="btn btn-primary">◀️ Volver</a>
 
 </body>
 

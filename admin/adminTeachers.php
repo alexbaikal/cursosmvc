@@ -125,8 +125,8 @@
       }
 
       echo "<form method='post' action=" . htmlspecialchars($_SERVER["PHP_SELF"]) . " >";
-      echo "<td><a href='adminTeachersEdit.php?dni=" . $row['dni'] . "'>Editar</a>";
-      echo "<td><a href='adminTeachers.php?delete_dni=" . $row['dni'] . "'>Eliminar</a>";
+      echo "<td><a href='adminTeachersEdit.php?dni=" . $row['dni'] . "'>✏️</a>";
+      echo "<td><a href='adminTeachers.php?delete_dni=" . $row['dni'] . "'>❌</a>";
 
       echo "</td>";
       echo "</tr>";
@@ -141,9 +141,9 @@
     ?>
   </div>
   <button type="button" onclick="window.location.href='adminPanel.php'" class="btn btn-primary">
-    <- Volver panel administrador</button>
+    ◀️ Volver panel administrador</button>
 
-      <button type="button" onclick="window.location.href='adminTeachersAdd.php'" class="btn btn-primary">+ Añadir profesor</button>
+  <button type="button" onclick="window.location.href='adminTeachersAdd.php'" class="btn btn-primary">➕ Añadir profesor</button>
 
 </body>
 
