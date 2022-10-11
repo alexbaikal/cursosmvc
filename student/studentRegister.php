@@ -16,9 +16,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $DNI_err = "El DNI sólo puede contener letras y números.";
     } else {
         // Validar que el DNI sea Español
-        $dni = trim($_POST["dni"]);
-        if (!preg_match('/^[0-9]{8}[A-Z]$/', $dni)) {
-            $dni_err = "El DNI no es válido.";
+        $DNI = trim($_POST["DNI"]);
+        if (!preg_match('/^[0-9]{8}[A-Z]$/', $DNI)) {
+            $DNI_err = "El DNI no es válido.";
         } else {
 
             // Prepare a select statement
@@ -201,7 +201,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     // Check input errors before inserting in database
-    if (empty($dni_err) && empty($name_err) && empty($surname_err) && empty($age_err) && empty($password_err) && empty($confirm_password_err) && empty($upload_image_err)) {
+    if (empty($DNI_err) && empty($name_err) && empty($surname_err) && empty($age_err) && empty($password_err) && empty($confirm_password_err) && empty($upload_image_err)) {
 
         // Prepare an insert statement
         $sql = "INSERT INTO students (DNI, name, surname, age, password, image) VALUES (?, ?, ?, ?, ?, ?)";

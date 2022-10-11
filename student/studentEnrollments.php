@@ -5,12 +5,18 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="stylesheet" href="../styles/admin.css">
+  <link rel="stylesheet" href="./styles/sidebar.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin - cursos</title>
 </head>
 
 <body>
+
+
+
+
+
   <?php
   // Initialize the session
   session_start();
@@ -137,7 +143,7 @@
 
   
 
-      if ($course_row['start'] > time() && mysqli_num_rows($resultQuery) > 0) {
+      if (mysqli_num_rows($resultQuery) > 0) {
 
        
 
@@ -160,9 +166,27 @@
 
       echo "<form method='post' action=" . htmlspecialchars($_SERVER["PHP_SELF"]) . " >";
 
-      echo "<td>-</td>";
+      //get grade from resultQuery
 
-      echo "<td><a href='studentEnrollments.php?quit_id_course=" . $course_row['id_course'] . "'>Baja❌</a>";
+      $grade = mysqli_fetch_array($resultQuery);
+
+      if ($grade['grade'] == null) {
+
+        echo "<td>-</td>";
+      } else {
+
+        echo "<td>" . $grade['grade'] . "</td>";
+      }
+
+      //check if course has finished. if not, add quit button
+
+      if ($course_row['end'] > time()) {
+
+        echo "<td><a href='studentEnrollments.php?quit_id_course=" . $course_row['id_course'] . "'>Baja❌</a>";
+      } else {
+
+        echo "<td>-</td>";
+      }
 
       echo "</td>";
 
@@ -183,6 +207,18 @@
   </div>
   <a href="studentPanel.php" class="btn btn-primary">◀️ Volver</a>
 
+
+  <script>
+        closeNav();
+
+        function openNav() {
+            document.getElementsByClassName("sidebar")[0].style.width = "250px";
+        }
+
+        function closeNav() {
+            document.getElementsByClassName("sidebar")[0].style.width = "0";
+        }
+    </script>
 </body>
 
 </html>

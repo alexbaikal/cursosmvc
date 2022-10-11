@@ -142,6 +142,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Afegir curs</title>
     <link rel="stylesheet" href="../styles/admin.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./styles/sidebar.css">
+
     <style>
         body {
             font: 14px sans-serif;
@@ -159,6 +161,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
+
+    <!--sidebar on top of everything using bootstrap and grid-->
+    <div class="row">
+        <div class="col-2">
+            <div class="sidebar">
+                <!--button to hide sidebar-->
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">❌</a>
+                <a href="./adminPanel.php">Inici</a>
+                <a href="./adminCourses.php">Cursos 🏫</a>
+                <a href="./adminTeachers.php">Professors 👨‍🎓</a>
+                <a href="../logout.php">Tancar sessió ❌</a>
+            </div>
+            <!--button that calls openNav()-->
+            <button class="openbtn" onclick="openNav()">☰</button>
+
+        </div>
+        <div class="col-10">
+
+        </div>
+    </div>
+
+
     <div class="wrapper">
         <h2>Afegir curs</h2>
         <p>➕Crear curs</p>
@@ -228,6 +252,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <p><a href="adminCourses.php">Panel cursos</a>.</p>
         </form>
     </div>
+
+    <script>
+        closeNav();
+
+        function openNav() {
+            document.getElementsByClassName("sidebar")[0].style.width = "250px";
+        }
+
+        function closeNav() {
+            document.getElementsByClassName("sidebar")[0].style.width = "0";
+        }
+    </script>
 </body>
 
 </html>
