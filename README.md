@@ -1,5 +1,8 @@
 # cursos
-Administración de cursos mediante phpmyadmin
+<h1>Administración de cursos mediante phpmyadmin</h1>
+<hl/>
+<b>Proyecto creado para módulo diseño de interfaces web y desarrollo en entorno servidor en IES La Pineda ❤️</b>
+<hl/>
 
 Permite:
 <ul>
@@ -8,9 +11,9 @@ Permite:
   <li>Dar de alta/baja a alumnos</li>
   <li>Poner nota a cursos finalizados</li>
   <li>y demás</li>
+</ul>
   
-
-<b>Proyecto creado para módulo diseño de interfaces web y desarrollo en entorno servidor.</b>
+  <u>Pasos a seguir para construir el proyecto:</u>
 
 ```
 Ubicarse en la carpeta htdocs dentro de la instalación de XAMPP o phpmyadmin
@@ -34,7 +37,7 @@ Crear base de datos llamada "cursos" mediante phpmyadmin
 
 
 ```
-Importar base de datos ubicada en ./courses.sql a la base de datos "curos"
+Importar base de datos ubicada en ./courses.sql a la base de datos "cursos"
 ```
 
 
