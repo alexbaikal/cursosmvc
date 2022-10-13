@@ -1,5 +1,14 @@
 # cursos
-Administració de cursos amb phpmyadmin
+Administración de cursos mediante phpmyadmin
+
+Permite:
+<ul>
+  <li>Crear, borrar, editar cursos disponibles</li>
+  <li>Panel de administrador, profesor y usuario</li>
+  <li>Dar de alta/baja a alumnos</li>
+  <li>Poner nota a cursos finalizados</li>
+  <li>y demás</li>
+  
 
 <b>Proyecto creado para módulo diseño de interfaces web y desarrollo en entorno servidor.</b>
 
