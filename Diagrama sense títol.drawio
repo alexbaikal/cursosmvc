@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2022-11-28T12:49:18.942Z" agent="5.0 (X11)" etag="oKCxTiIvr56advG2OWAL" version="20.5.3" type="github">
+<mxfile host="app.diagrams.net" modified="2022-11-28T12:58:36.239Z" agent="5.0 (X11)" etag="zQQGVW_rNqvsC_7fIvVG" version="20.5.3" type="github">
   <diagram id="AYHsNj7UqvlPwNfMaj41" name="Pàgina-1">
-    <mxGraphModel dx="767" dy="8227" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="10000" pageHeight="7000" math="0" shadow="0">
+    <mxGraphModel dx="1354" dy="7702" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="10000" pageHeight="7000" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -217,6 +217,15 @@
             <mxPoint x="720" y="590" as="sourcePoint" />
             <mxPoint x="770" y="540" as="targetPoint" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="_TnW2diXNQogOkegqYNa-75" value="&lt;div&gt;Administrador puede gestionar profesores y cursos&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="65" y="365" width="290" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="_TnW2diXNQogOkegqYNa-76" value="&lt;div&gt;El Estudiante puede ver la nota de cursos&lt;/div&gt;&lt;div&gt;finalizados en los que se ha matriculado&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="460" y="360" width="240" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="_TnW2diXNQogOkegqYNa-77" value="&lt;div&gt;El profesor puede buscar cursos&lt;/div&gt;&lt;div&gt;(pero no crear) que tiene&lt;/div&gt;&lt;div&gt;asignados y poner nota nota a los alumnos&lt;/div&gt;&lt;div&gt;matriculados una vez acabado&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="760" y="310" width="250" height="70" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
