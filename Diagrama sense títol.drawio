@@ -1,1 +1,19 @@
-<mxfile host="app.diagrams.net" modified="2022-11-28T11:54:46.101Z" agent="5.0 (X11)" version="20.5.3" etag="lGOIfhMwvK9BE9f0NRxZ" type="github"><diagram id="AYHsNj7UqvlPwNfMaj41">UzV2zq1wL0osyPDNT0nNUTV2VTV2LsrPL4GwciucU3NyVI0MMlNUjV1UjYwMgFjVyA2HrCFY1qAgsSg1rwSLBiADYTaQg2Y1AA==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2022-11-28T11:57:10.596Z" agent="5.0 (X11)" etag="D-sPLzyz-vk_RKGl42Gi" version="20.5.3" type="github">
+  <diagram id="AYHsNj7UqvlPwNfMaj41" name="Pàgina-1">
+    <mxGraphModel dx="1422" dy="737" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="10000" pageHeight="7000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="_TnW2diXNQogOkegqYNa-1" value="&lt;div&gt;Estudiante&lt;/div&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="180" y="150" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="_TnW2diXNQogOkegqYNa-2" value="&lt;div&gt;Profesor&lt;/div&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="180" y="430" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="_TnW2diXNQogOkegqYNa-3" value="&lt;div&gt;Admin&lt;/div&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="180" y="300" width="30" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
