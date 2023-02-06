@@ -1,7 +1,7 @@
-# cursos
+# cursosmvc
 <h1>Administración de cursos mediante phpmyadmin</h1>
 <hl/>
-<b>Proyecto creado para módulo diseño de interfaces web y desarrollo en entorno servidor en IES La Pineda ❤️</b>
+<b>Proyecto refactorizado en MVC para módulo de entornos de desarrollo en IES La Pineda ❤️</b>
 <hl/>
 
 Permite:
