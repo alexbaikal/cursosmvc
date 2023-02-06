@@ -1,5 +1,5 @@
 # cursosmvc
-<h1>Administración de cursos mediante phpmyadmin</h1>
+<h1>Administración de cursos mediante phpmyadmin Modelo Vista Controlador</h1>
 <hl/>
 <b>Proyecto refactorizado en MVC para módulo de entornos de desarrollo en IES La Pineda ❤️</b>
 <hl/>
