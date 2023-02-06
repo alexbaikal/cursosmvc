@@ -7,13 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="./styles/admin.css">
     <link rel="stylesheet" href="./styles/index.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./styles/studentLogin.css">
-    <link rel="stylesheet" href="./views/usuarios/componentes/styles/studentPanel.css">
-    <link rel="stylesheet" href="./views/usuarios/componentes/styles/studentLogin.css">
 
     <title>InfoBDN</title>
 </head>
@@ -37,6 +33,8 @@ if (isset($_SESSION['user_id'])){
 
 if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true && $_SESSION["role"] === "student") {
     require_once "views/usuarios/componentes/sidebarEstudiante.html";
+} else if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true && $_SESSION["role"] === "teacher") {
+    require_once "views/usuarios/componentes/sidebarProfesor.html";
 }
 require_once "views/general/cabecera.html";
 

@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="views/usuarios/componentes/styles/sidebar.css">
+<link rel="stylesheet" href="./views/usuarios/componentes/styles/sidebar.css">
 
 
 
@@ -12,10 +12,10 @@
         <div class="sidebar">
             <!--button to hide sidebar-->
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">❌</a>
-            <a href="./studentPanel.php">Inici</a>
-            <a href="./studentCourses.php">Cursos 👨‍🎓</a>
-            <a href="./studentEnrollments.php">Matriculas 📋</a>
-            <a href="/logout.php">Cerrar sessió</a>
+            <a href="./index.php?controller=Usuario&action=studentPanel">Inici</a>
+            <a href="./index.php?controller=Student&action=studentCourses">Cursos 👨‍🎓</a>
+            <a href="./index.php?controller=Student&action=studentEnrollments">Matriculas 📋</a>
+            <a href="./index.php?controller=Usuario&action=logout">Cerrar sessió</a>
         </div>
 
     </div>

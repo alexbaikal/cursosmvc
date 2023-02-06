@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="./views/usuarios/componentes/styles/studentLogin.css">
 <style>
     body {
         font: 14px sans-serif;
@@ -36,7 +37,7 @@
             <div class="submit-btn">
                 <input type="submit" class="btn btn-primary" value="Iniciar sesión">
             </div>
-            <p>¿No tienes cuenta? <a href="/cursos/student/studentRegister.php">¡Regístrate ahora! :)</a>.</p>
+            <p>¿No tienes cuenta? <a href="./index.php?controller=Usuario&action=studentRegister">¡Regístrate ahora! :)</a>.</p>
         </form>
         <button type="button" onclick="window.location.href='../index.php'" class="btn btn-primary back-btn">
             <- Volver inicio</button>

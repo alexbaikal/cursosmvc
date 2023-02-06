@@ -3,7 +3,6 @@
 body {
     font: 14px 'Open Sans', sans-serif;
     display: flex;
-    justify-content: center;
     align-items: center;
     flex-direction: column;
     margin: 50px;
